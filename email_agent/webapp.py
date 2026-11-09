@@ -709,6 +709,8 @@ def make_handler(app: App):
             try:
                 if not parts:
                     return self._send(200, (WEB_DIR / "index.html").read_bytes(), "text/html; charset=utf-8")
+                if parts == ["api", "ping"]:   # cheap "is this Mail Agent?" check for a second launch
+                    return self._json({"app": "mail-agent"})
                 if parts == ["api", "state"]:
                     since = int(parse_qs(url.query).get("since", ["0"])[0])
                     return self._json(app.state(since))
@@ -818,11 +820,11 @@ def find_running(port: int = 8765, span: int = 20) -> str | None:
     for p in range(port, port + span):
         url = f"http://127.0.0.1:{p}/"
         try:
-            with urllib.request.urlopen(url + "api/state?since=0", timeout=0.5) as r:
+            with urllib.request.urlopen(url + "api/ping", timeout=2) as r:
                 data = json.loads(r.read())
-        except Exception:
+        except Exception:   # nothing there (refused at once), or another program
             continue
-        if isinstance(data, dict) and "reader" in data and "live" in data:   # it's us, not another program
+        if isinstance(data, dict) and data.get("app") == "mail-agent":   # it's us, not another program
             return url
     return None
 

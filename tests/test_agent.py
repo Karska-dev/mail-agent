@@ -757,7 +757,7 @@ def test_app_runs_once_quits_from_the_page_and_when_idle(tmp_path):
     t = threading.Thread(target=webapp.serve, args=(tmp_path,), kwargs={"port": port, "engine": "offline",
                                                                          "open_browser": False}, daemon=True)
     t.start()
-    for _ in range(50):
+    for _ in range(150):   # slow machines (GitHub's Mac runners) can take a few seconds
         if webapp.find_running(port, span=1):
             break
         time.sleep(0.1)
