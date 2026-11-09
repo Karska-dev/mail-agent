@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mail-agent"
+version = "1.0.0"
+description = "A private email assistant that runs on your own computer and learns how you handle your mail."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Karska-dev" }]
+requires-python = ">=3.10"
+dependencies = []  # standard library only
+keywords = ["email", "imap", "gmail", "privacy", "local-first", "ollama", "llm", "inbox"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Communications :: Email",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+mail-agent = "email_agent.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Karska-dev/mail-agent"
+Issues = "https://github.com/Karska-dev/mail-agent/issues"
+
+[tool.setuptools]
+packages = ["email_agent"]
+
+[tool.setuptools.package-data]
+email_agent = ["web/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mail Agent</title>
+<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,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">
+<style>
+:root {
+  --bg: #f6f5f2; --panel: #ffffff; --panel-2: #f1efea; --ink: #1d1c1a; --muted: #6b6860;
+  --line: #e3e0d8; --accent: #2f6b5f; --accent-ink: #ffffff; --accent-soft: #e2efeb;
+  --warn: #9a6400; --warn-soft: #fbf1dc; --ok: #2f7a3e; --ok-soft: #e6f3e8; --danger: #b3261e;
+  --you: #eef1f8; --you-ink: #243457; --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --panel: #201f1d; --panel-2: #2a2926; --ink: #ecebe6; --muted: #a09d94;
+    --line: #34332f; --accent: #6fc2ae; --accent-ink: #0f1f1b; --accent-soft: #1d3530;
+    --warn: #f0b555; --warn-soft: #3a2f1a; --ok: #7fcf8d; --ok-soft: #1d3322; --danger: #ff8a80;
+    --you: #252c3d; --you-ink: #c9d5f2; --shadow: none;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--accent); }
+
+header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px; background: var(--panel); border-bottom: 1px solid var(--line); }
+header h1 { font-size: 17px; margin: 0; font-weight: 650; }
+.pill { font-size: 12px; padding: 2px 9px; border-radius: 99px; background: var(--panel-2); color: var(--muted); }
+.pill.running { background: var(--accent-soft); color: var(--accent); }
+.pill.error { background: #f9dedc; color: var(--danger); }
+header .spacer { flex: 1; }
+
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 9px; padding: 7px 14px; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.btn.quiet { background: transparent; }
+.btn.danger { color: var(--danger); }
+.btn.small { padding: 3px 10px; font-size: 13px; border-radius: 7px; }
+.btn:disabled { opacity: .5; cursor: default; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; max-width: 1280px;
+  margin: 0 auto; padding: 20px; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; padding: 12px 16px; } }
+
+/* ---------- start screen ---------- */
+.start { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 700px) { .start { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px;
+  box-shadow: var(--shadow); }
+.card h2 { margin: 0 0 6px; font-size: 17px; }
+.card p { margin: 0 0 12px; color: var(--muted); }
+label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 4px; }
+input[type=text], input[type=password], input[type=email], input[type=number], textarea {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); }
+input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+.row { display: flex; gap: 10px; }
+.row > div { flex: 1; }
+.check { display: flex; gap: 8px; align-items: flex-start; margin: 12px 0; font-size: 14px; color: var(--ink); }
+.check input { margin-top: 3px; }
+details { margin-top: 8px; font-size: 14px; }
+summary { cursor: pointer; color: var(--muted); }
+.hint { font-size: 13px; color: var(--muted); }
+.err { color: var(--danger); font-size: 14px; margin-top: 8px; }
+
+.accs { display: grid; gap: 6px; margin: 4px 0 10px; }
+.acc { display: flex; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--line);
+  border-radius: 9px; margin: 0; color: var(--ink); font-size: 14px; }
+.acc-name { font-weight: 600; flex: 1; }
+.addbox { border: 1px dashed var(--line); border-radius: 10px; padding: 4px 14px 14px; margin-top: 6px; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0 4px; }
+.acc-divider { font-weight: 650; margin: 18px 0 10px; font-size: 15px; }
+
+.reader { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
+.reader.on { border-color: var(--accent); background: var(--accent-soft); }
+.reader-head { display: flex; gap: 8px; align-items: center; margin: 0; color: var(--ink); font-size: 15px; cursor: pointer; }
+.reader-head .pill { margin-left: auto; }
+.reader-body { margin: 6px 0 2px 24px; font-size: 14px; }
+.reader-body p { margin: 4px 0 8px; color: var(--muted); }
+.reader:not(.on) .reader-body { display: none; }
+.steps { margin: 4px 0 6px; padding-left: 20px; }
+.bar { height: 8px; background: var(--panel-2); border-radius: 99px; overflow: hidden; }
+.bar div { height: 100%; background: var(--accent); transition: width .4s; }
+
+.pill.wait { background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+.pill .tally { opacity: .85; font-weight: 500; }
+.pill.done { background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+.pill { display: inline-flex; align-items: center; gap: 6px; }
+.spin { width: 18px; height: 18px; border: 2.5px solid var(--accent-soft); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin .8s linear infinite; flex: none; display: inline-block; }
+.spin.sm { width: 11px; height: 11px; border-width: 2px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spin { animation-duration: 2.4s; } }
+.working { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-top: 1px solid var(--line);
+  background: var(--accent-soft); color: var(--ink); font-size: 14px; }
+.working-card { padding: 0; overflow: hidden; margin-bottom: 14px; }
+.working-card .working { border-top: 0; }
+
+.reading { border: 1px solid var(--accent); border-radius: 10px; background: var(--panel); margin: 4px 0; overflow: hidden; }
+.reading-head { background: var(--accent-soft); color: var(--accent); font-weight: 600; padding: 8px 12px; font-size: 13px; }
+.reading-meta { padding: 8px 14px 0; font-size: 12px; color: var(--muted); }
+.reading-body { padding: 8px 14px 14px; white-space: pre-wrap; word-wrap: break-word; max-height: 55vh; overflow-y: auto;
+  font-size: 15px; line-height: 1.6; }
+
+.tag { font-size: 11px; font-weight: 650; padding: 2px 8px; border-radius: 6px; }
+.tag.imp { background: var(--warn-soft); color: var(--warn); }
+.tag.new { background: var(--ok-soft); color: var(--ok); }
+.cat.cat-sec { background: #e5ecfb; color: #2b4c9a; }
+.tag.sec { background: #e5ecfb; color: #2b4c9a; }
+@media (prefers-color-scheme: dark) { .cat.cat-sec { background: #e5ecfb; color: #2b4c9a; }
+.tag.sec { background: #1f2a44; color: #9db6f0; } }
+.warn { margin-top: 12px; padding: 10px 14px; border-radius: 10px; font-size: 14px; border: 1px solid; }
+.warn ul { margin: 6px 0 4px; padding-left: 20px; }
+.warn-tip { font-size: 13px; margin-top: 4px; opacity: .9; }
+.warn.high { background: #fdecea; border-color: #f2b8b5; color: #8c1d18; }
+.warn.low { background: var(--warn-soft); border-color: transparent; color: var(--warn); }
+.warn.info { background: #eef3fd; border-color: #cfdcf7; color: #2b4c9a; }
+@media (prefers-color-scheme: dark) {
+  .warn.high { background: #3a1d1b; border-color: #6b2b27; color: #ffb4ab; }
+  .warn.info { background: #1c2436; border-color: #2c3a5c; color: #b8c9f2; }
+}
+.imp-reason { margin-top: 8px; font-size: 13px; color: var(--warn); font-weight: 600; }
+
+/* ---------- feed ---------- */
+.banner { padding: 10px 14px; border-radius: 10px; background: var(--panel-2); color: var(--muted);
+  font-size: 14px; margin-bottom: 12px; }
+.mail { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px;
+  box-shadow: var(--shadow); overflow: hidden; }
+.mail.past { opacity: .78; }
+.mail.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); opacity: 1; }
+.mail-head { padding: 14px 18px 10px; }
+.meta { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.cat { text-transform: uppercase; letter-spacing: .04em; font-weight: 650; font-size: 11px; padding: 2px 8px;
+  border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+.subject { font-size: 16px; font-weight: 650; margin: 6px 0 2px; }
+.from { font-size: 13px; color: var(--muted); }
+.summary { margin: 8px 0 0; }
+.facts { margin: 10px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; font-size: 14px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.facts code { background: var(--panel-2); padding: 1px 6px; border-radius: 5px; font-weight: 600; }
+.lines { border-top: 1px solid var(--line); padding: 10px 18px; display: grid; gap: 6px; font-size: 14px; }
+.line { display: flex; gap: 8px; align-items: flex-start; }
+.line .ic { width: 18px; text-align: center; flex: none; font-weight: 700; }
+.line.done .ic { color: var(--ok); }
+.line.notice { background: var(--warn-soft); margin: 0 -8px; padding: 6px 8px; border-radius: 8px; }
+.line.notice .ic { color: var(--warn); }
+.line.you { justify-content: flex-end; }
+.line.you span { background: var(--you); color: var(--you-ink); padding: 5px 11px; border-radius: 12px 12px 3px 12px;
+  max-width: 85%; }
+.link { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; font-size: 13px; }
+
+.ask { border-top: 1px solid var(--line); background: var(--panel-2); padding: 14px 18px 16px; }
+.ask .prompt { font-weight: 650; margin-bottom: 10px; }
+.choices { display: grid; gap: 8px; }
+.choice { text-align: left; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--panel); display: flex; gap: 10px; align-items: baseline; }
+.choice:hover { border-color: var(--accent); }
+.choice .k { font-size: 12px; color: var(--muted); min-width: 14px; }
+.choice.secondary { background: transparent; color: var(--muted); }
+.answer-row { display: flex; gap: 8px; }
+.answer-row textarea { resize: none; min-height: 44px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { font-size: 13px; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line); background: var(--panel); }
+.chip:hover { border-color: var(--accent); }
+.chip.util { background: transparent; }
+.chips-label { font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+.done-card h2 { margin-top: 0; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin: 12px 0 16px; }
+.stat { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
+.stat b { display: block; font-size: 22px; }
+.stat span { font-size: 12px; color: var(--muted); }
+
+/* ---------- sidebar ---------- */
+aside { position: sticky; top: 76px; align-self: start; max-height: calc(100vh - 96px); display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+@media (max-width: 900px) { aside { position: static; max-height: none; } }
+.tabs { display: flex; flex-wrap: wrap; flex: none; border-bottom: 1px solid var(--line); background: var(--panel); }
+.tab { flex: 1 1 auto; padding: 10px 4px; border: 0; background: none; font-size: 12.5px; color: var(--muted);
+  border-bottom: 2px solid transparent; white-space: nowrap; }
+.tab.on { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+.tab .n { font-size: 11px; background: var(--panel-2); border-radius: 99px; padding: 0 6px; margin-left: 3px; }
+.when { margin: 4px 0 2px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+.when-chip { display: inline-block; font-size: 12.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px;
+  background: var(--panel-2); color: var(--muted); }
+.when-chip.overdue { background: #f9dedc; color: #b3261e; }
+.when-chip.soon { background: #ffe3c2; color: #9a4a00; }
+.when-chip.week { background: #fff1c9; color: #7a5a00; }
+.when-chip.later { background: #e3ecfb; color: #2f5596; }
+.is-done .when-chip { opacity: .6; }
+@media (prefers-color-scheme: dark) {
+  .when-chip.overdue { background: #5c1f1b; color: #ffb4ab; } .when-chip.soon { background: #5a3300; color: #ffcf99; }
+  .when-chip.week { background: #4a3c00; color: #f5dc8a; } .when-chip.later { background: #1e3157; color: #b3c8f2; } }
+.when-text { font-size: 12px; color: var(--muted); }
+.cu-bar { padding: 8px 0 2px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 12.5px; }
+.cu-box { margin: 10px 0; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); font-size: 13px; }
+.cu-box .t { font-weight: 600; margin-bottom: 6px; }
+.cu-box input[type=number] { width: 64px; padding: 3px 6px; margin: 0 4px; }
+.cu-preview { margin-top: 6px; }
+.pane { overflow-y: auto; padding: 6px 14px 14px; flex: 1 1 auto; min-height: 0; }
+.note-text { white-space: pre-wrap; font-size: 13px; margin-top: 4px; }
+.rw-banner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--accent);
+  background: var(--accent-soft); border-radius: 8px; padding: 5px 9px; margin: 4px 0; }
+.is-rewriting .t, .is-rewriting .about { opacity: .55; }
+.link:disabled { color: var(--muted); text-decoration: none; cursor: default; }
+.about { font-size: 13px; color: var(--muted); margin: 2px 0; display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden; }
+.acts a.link { font-size: 13px; }
+.note-edit input, .note-edit textarea { width: 100%; font-size: 14px; padding: 7px 9px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--bg); margin-top: 6px; }
+.note-edit textarea { min-height: 110px; resize: vertical; }
+.link.danger { color: var(--danger); }
+.item { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.item:last-child { border-bottom: 0; }
+.item .t { font-weight: 600; }
+.item .s { color: var(--muted); font-size: 13px; }
+.item .acts { display: flex; gap: 8px; margin-top: 6px; }
+.todo { display: flex; gap: 10px; }
+.todo input { margin-top: 4px; }
+.todo.is-done .t { text-decoration: line-through; color: var(--muted); }
+.kv { font-size: 13px; margin-top: 4px; }
+.kv b { font-weight: 600; color: var(--muted); }
+.loc { font-size: 11px; padding: 1px 7px; border-radius: 6px; background: var(--panel-2); color: var(--muted); }
+.loc.trash { color: var(--danger); }
+.empty { color: var(--muted); font-size: 14px; padding: 18px 0; text-align: center; }
+
+/* ---------- modal ---------- */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: none; align-items: center;
+  justify-content: center; padding: 16px; z-index: 20; }
+.modal-bg.show { display: flex; }
+.modal { background: var(--panel); border-radius: 14px; width: min(980px, 100%); max-height: 92vh; display: flex;
+  flex-direction: column; overflow: hidden; }
+.modal-head { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.modal-body { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.viewer { display: flex; flex-direction: column; background: var(--panel); }
+.viewer-tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px 14px;
+  border-bottom: 1px solid var(--line); background: var(--panel-2); font-size: 13px; }
+.viewer-tools .hint { margin-left: 6px; }
+.seg { border: 1px solid var(--line); background: var(--panel); padding: 3px 10px; font-size: 13px; }
+.seg:first-child { border-radius: 7px 0 0 7px; } .seg:nth-child(2) { border-radius: 0 7px 7px 0; margin-left: -9px; }
+.seg.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.mailframe { width: 100%; border: 0; background: #fff; display: block; }
+.viewer.modal .mailframe { height: 68vh; }
+.viewer.reading .mailframe { height: 60vh; }
+.modal-foot { padding: 12px 20px; border-top: 1px solid var(--line); display: flex; gap: 8px; justify-content: flex-end;
+  align-items: center; }
+.modal-foot .hint { margin-right: auto; }
+.toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg);
+  padding: 8px 16px; border-radius: 9px; font-size: 14px; display: none; z-index: 30; }
+</style>
+</head>
+<body>
+<header>
+  <h1>✉ Mail Agent</h1>
+  <span id="status" class="pill">idle</span>
+  <span id="who" class="hint"></span>
+  <span class="spacer"></span>
+  <button id="stopBtn" class="btn danger" style="display:none">Stop for now</button>
+  <button id="newBtn" class="btn quiet" style="display:none">New session</button>
+  <button id="quitBtn" class="btn quiet" title="Quit Mail Agent (anything not handled stays in your inbox)">Quit</button>
+</header>
+
+<div class="layout">
+  <main id="main"></main>
+  <aside>
+    <div class="tabs" id="tabs"></div>
+    <div class="pane" id="pane"></div>
+  </aside>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head" id="mHead"></div>
+    <div class="modal-body" id="mBody"></div>
+    <div class="modal-foot">
+      <span class="hint" id="mWhere"></span>
+      <button class="btn" id="mRestore">Put back in inbox</button>
+      <button class="btn primary" id="mClose">Close</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const api = async (path, body) => {
+  const r = await fetch(path, body === undefined ? {} : {method: "POST", headers: {"Content-Type": "application/json"},
+                                                        body: JSON.stringify(body)});
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+};
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.style.display = "block";
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = "none", 2600); }
+
+let lastActivity = null;
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+let S = {status: "idle"}, events = [], cards = [], banner = [], lastQ = null, draft = "";
+let tab = "todos", panels = {}, panelSig = "", seenOriginal = -1, pageStart = true;
+
+// ------------------------------------------------------------ polling
+let quitting = false;
+async function poll() {
+  if (quitting) return;
+  try {
+    const st = await api(`/api/state?since=${events.length}`);
+    const fresh = st.events || [];
+    if (st.status !== S.status && st.status === "connecting") { events = []; }
+    events.push(...fresh);
+    const qChanged = JSON.stringify(st.question) !== JSON.stringify(lastQ);
+    const statusChanged = st.status !== S.status || st.error !== S.error;
+    S = st; lastQ = st.question;
+    const actChanged = st.activity !== lastActivity; lastActivity = st.activity;
+    if (fresh.length || qChanged || statusChanged || actChanged) { build(); render(); }
+    else if ($("#actSecs")) $("#actSecs").textContent = st.activity_seconds >= 2 ? st.activity_seconds + "s" : "";
+    const rs = JSON.stringify([st.reader, st.local, st.pull, st.claude, st.local_model]);
+    if (rs !== readerSig) { readerSig = rs; if (S.status === "idle" && !statusChanged) paintReader(); }
+    const sig = events.length + S.status + S.mode + (S.accounts || []).length;
+    if (sig !== panelSig) { panelSig = sig; loadPanels(); }
+    for (const e of fresh) if (e.type === "original" && e.seq > seenOriginal && !pageStart) { seenOriginal = e.seq; openOriginal(e.ref); }
+    if (pageStart) { seenOriginal = events.length - 1; pageStart = false; }
+  } catch (e) { $("#status").textContent = "not connected"; $("#status").className = "pill error"; }
+  setTimeout(poll, S.status === "running" || S.status === "connecting" ? 500 : 1500);
+}
+
+function build() {
+  cards = []; banner = [];
+  for (const e of events) {
+    const last = cards[cards.length - 1];
+    const mail = last && last.lines ? last : null;       // the email card currently being filled
+    if (e.type === "account") cards.push({account: e.user});
+    else if (e.type === "email") cards.push({...e, lines: []});
+    else if (e.type === "analysis" && mail) mail.analysis = e;
+    else if (["done", "notice", "answer", "info", "reading"].includes(e.type) && mail) mail.lines.push(e);
+    else if (["info", "notice", "done"].includes(e.type)) cards.push({banner: e.text});
+  }
+}
+
+// ------------------------------------------------------------ rendering
+function render() {
+  const st = $("#status");
+  const live0 = S.status === "running" || S.status === "connecting";
+  const waiting = live0 && S.question;
+  const lastMail = [...cards].reverse().find(c => c.lines);
+  const L = S.live || {};
+  const tallies = [L.auto ? `${L.auto} auto` : "", L.asked ? `${L.asked} by you` : "", L.one_off ? `${L.one_off} read & archived` : "",
+                   L.skipped ? `${L.skipped} skipped` : ""].filter(Boolean).join(" · ");
+  const prog = live0 && lastMail ? ` · email ${lastMail.n} of ${lastMail.total}${tallies ? ` <span class="tally">(${tallies})</span>` : ""}` : "";
+  st.innerHTML = S.status === "idle" ? "ready"
+    : S.status === "error" ? "error"
+    : S.status === "finished" ? "✓ session finished"
+    : waiting ? `● waiting for your answer${prog}`
+    : `<span class="spin sm"></span> working${prog}`;
+  st.className = "pill " + (S.status === "error" ? "error" : S.status === "finished" ? "done"
+    : waiting ? "wait" : live0 ? "running" : "");
+  $("#who").textContent = S.status === "idle" ? "" : S.mode === "demo" ? "Demo inbox" + (S.auto ? " · auto mode" : "") : (S.current_account || "") + (S.dry_run ? " · practice mode" : "") + (S.auto ? " · auto mode" : "");
+  const live = S.status === "running" || S.status === "connecting";
+  $("#stopBtn").style.display = live ? "" : "none";
+  $("#newBtn").style.display = (S.status === "finished" || S.status === "error") ? "" : "none";
+
+  const main = $("#main");
+  const ta = $("#answer"); if (ta) draft = ta.value;
+  if (S.status === "idle") { main.innerHTML = startScreen(); wireStart(); return; }
+
+  let html = "";
+  if (S.status === "error") html += `<div class="card"><h2>Something went wrong</h2><p class="err">${esc(S.error)}</p>
+      <button class="btn primary" onclick="newSession()">Back</button></div>`;
+  for (const b of banner) html += `<div class="banner">${esc(b)}</div>`;
+  cards.forEach((c, i) => html += c.banner ? `<div class="banner">${esc(c.banner)}</div>` : c.account
+    ? `<div class="acc-divider">📬 ${esc(c.account)}</div>`
+    : mailCard(c, i === cards.length - 1 && S.status === "running"));
+  const busyNow = (S.status === "running" || S.status === "connecting") && !S.question;
+  const lastC = cards[cards.length - 1];
+  const inCard = lastC && lastC.lines && S.status === "running";   // the active email card shows it itself
+  if (busyNow && !inCard) html += workingCard();
+  if (S.status === "finished") html += doneCard();
+  main.innerHTML = html;
+  wireAsk();
+  const active = $(".mail.active");
+  if (active && (lastRenderedCard !== cards.length || S.question)) {
+    const r = active.getBoundingClientRect();
+    if (lastRenderedCard !== cards.length || r.bottom > innerHeight) active.scrollIntoView({block: "end", behavior: "smooth"});
+  }
+  lastRenderedCard = cards.length;
+  if (S.status === "finished" && lastRenderedStatus !== "finished") {
+    const d = $(".done-card"); if (d) d.scrollIntoView({block: "center", behavior: "smooth"});
+  }
+  lastRenderedStatus = S.status;
+}
+let lastRenderedStatus = null;
+let lastRenderedCard = 0;
+
+function mailCard(c, isActive) {
+  const a = c.analysis || {};
+  const facts = Object.entries(a.facts || {}).map(([k, v]) =>
+    `<dt>${esc(k)}</dt><dd>${[].concat(v).map(x => k === "coupon code" ? `<code>${esc(x)}</code>` : esc(x)).join(k === "coupon code" ? " " : "<br>")}</dd>`).join("");
+  const lines = c.lines.map(l => {
+    if (l.type === "answer") return `<div class="line you"><span>${esc(l.text)}</span></div>`;
+    if (l.type === "reading") return isActive && S.question
+      ? `<div class="reading"><div class="reading-head">📖 Here's the full email — read it, then tell me when you're done</div>
+          ${viewer(l.ref, l.view, "reading")}</div>`
+      : `<div class="line done"><span class="ic">📖</span><span>You read it here · <button class="link" onclick="openOriginal(${l.ref})">open again</button></span></div>`;
+    const ic = l.type === "done" ? "✓" : l.type === "notice" ? "?" : "·";
+    return `<div class="line ${l.type}"><span class="ic">${ic}</span><span>${esc(l.text)}</span></div>`;
+  }).join("");
+  return `<article class="mail ${isActive ? "active" : "past"}">
+    <div class="mail-head">
+      <div class="meta">${a.category ? `<span class="cat ${a.category === "security" ? "cat-sec" : ""}">${a.category === "security" ? "🔒 " : ""}${esc(a.category)}</span>` : ""}
+        ${a.importance === "high" ? `<span class="tag imp" title="${esc(a.importance_reason || "")}">★ Important</span>` : ""}
+        ${c.fresh ? `<span class="tag new">📨 just arrived</span>` : ""}<span>${c.n} of ${c.total}</span>${c.ref ? `<span>· #${c.ref}</span>` : ""}${a.engine && a.engine !== "offline" ? `<span>· read by ${esc(a.engine)}${a.seconds >= 1 ? ` in ${Math.round(a.seconds)}s` : ""}</span>` : ""}
+        ${c.ref ? `<button class="link" onclick="openOriginal(${c.ref})">view original</button>` : ""}</div>
+      <div class="subject">${esc(c.subject)}</div>
+      <div class="from">${esc(c.sender)}${c.date ? " · " + esc(c.date) : ""}</div>
+      ${a.summary ? `<div class="summary">${esc(a.summary)}</div>` : ""}
+      ${warningBox(a)}
+      ${facts ? `<dl class="facts">${facts}</dl>` : ""}
+    </div>
+    ${lines ? `<div class="lines">${lines}</div>` : ""}
+    ${isActive && S.question ? askBox(S.question, c) : ""}
+    ${isActive && !S.question ? workingLine() : ""}
+  </article>`;
+}
+
+const SUGGESTIONS = ["Save the key info to my notes and archive it", "Add it to my to-do list and archive it",
+  "Archive it", "Delete it", "Unsubscribe and delete it", "Leave it in my inbox"];
+
+function askBox(q, c) {
+  if (q.kind === "choice") {
+    const opts = q.options.map((o, i) => {
+      const sec = /^(Just read it|Show me the full)/.test(o);
+      return `<button class="choice ${sec ? "secondary" : ""}" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`;
+    }).join("");
+    return `<div class="ask"><div class="prompt">${esc(q.prompt)}</div><div class="choices">${opts}</div></div>`;
+  }
+  const main = /^What should I do with it\?/.test(q.prompt);
+  const prompt = main ? "What should I do with this email?" : q.prompt;
+  return `<div class="ask"><div class="prompt">${esc(prompt)}</div>
+    <div class="answer-row"><textarea id="answer" rows="1" placeholder="Tell me in your own words — e.g. “save the coupon code to my notes and delete it”">${esc(draft)}</textarea>
+    <button class="btn primary" id="send">Send</button></div>
+    <div class="chips-label">Quick answers</div>
+    <div class="chips">${SUGGESTIONS.map(s => `<button class="chip" data-fill="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+    ${main ? `<div class="chips">
+      <button class="chip util" data-send="r">📖 Just read it &amp; archive — no rule</button>
+      <button class="chip util" data-view="${c.ref}">👁 View original</button>
+      <button class="chip util" data-send="skip">⏭ Skip for now</button>
+    </div>` : ""}</div>`;
+}
+
+function warningBox(a) {
+  if (a.risk === "high" || a.risk === "low") {
+    const signs = (a.risk_signs || []).map(s => `<li>${esc(s)}</li>`).join("");
+    return `<div class="warn ${a.risk}"><b>${a.risk === "high" ? "⚠️ Be careful — this could be a fake (phishing) email"
+                                                            : "⚠️ Check this one before acting"}</b>
+      ${signs ? `<ul>${signs}</ul>` : ""}
+      <div class="warn-tip">Don't click its links or open attachments. If you're unsure, open the website or app yourself and check there.</div></div>`;
+  }
+  if (a.category === "security")
+    return `<div class="warn info"><b>🔒 Security email</b>
+      <div class="warn-tip">If you didn't expect this, check your account by going to the website yourself — not through the email's links.</div></div>`;
+  if (a.importance === "high" && a.importance_reason)
+    return `<div class="imp-reason">★ ${esc(a.importance_reason)}</div>`;
+  return "";
+}
+
+function workingLine() {
+  return `<div class="working"><span class="spin"></span><span id="actText">${esc(S.activity || "Working…")}</span>
+    <span class="hint" id="actSecs">${S.activity_seconds >= 2 ? S.activity_seconds + "s" : ""}</span></div>`;
+}
+function workingCard() { return `<div class="card working-card">${workingLine()}</div>`; }
+
+function doneCard() {
+  const s = S.stats || {};
+  const stat = (n, l) => `<div class="stat"><b>${n ?? 0}</b><span>${l}</span></div>`;
+  return `<div class="card done-card"><h2>${s.stopped ? "Stopped — see you next time" : "All done for this session"}</h2>
+    <div class="stats">${stat(s.auto, "handled by rules")}${stat(s.asked, "decided by you")}${stat(s.one_off, "read & archived")}
+      ${stat(s.skipped, S.auto ? "need you (skipped)" : "skipped")}${stat(s.left, "left for next time")}</div>
+    <p class="hint">${S.auto && s.skipped ? "Skipped emails are still unread in your inbox — start a normal session to go through them together. "
+      : ""}Emails left for next time are untouched in your inbox and will come up next session.</p>
+    <button class="btn primary" onclick="newSession()">Start another session</button></div>`;
+}
+
+function wireAsk() {
+  const q = S.question; if (!q) return;
+  document.querySelectorAll(".choice").forEach(b => b.onclick = () => answer(b.dataset.i));
+  const ta = $("#answer");
+  if (ta) {
+    ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+    ta.onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } };
+    $("#send").onclick = send;
+    document.querySelectorAll("[data-fill]").forEach(b => b.onclick = () => { ta.value = b.dataset.fill; ta.focus(); });
+    document.querySelectorAll("[data-send]").forEach(b => b.onclick = () => answer(b.dataset.send));
+    document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => openOriginal(+b.dataset.view));
+  }
+}
+function send() { const v = $("#answer").value.trim(); if (v) answer(v); }
+async function answer(value) {
+  try { draft = ""; await api("/api/answer", {id: S.question.id, value}); S.question = null; render(); }
+  catch (e) { toast(e.message); }
+}
+
+// ------------------------------------------------------------ start screen
+let chosen = null;          // which saved mailboxes are ticked (null = all)
+let showAdd = false;
+function startScreen() {
+  const accs = S.accounts || [];
+  if (chosen === null && S.accounts) chosen = new Set(accs.map(a => a.user));
+  const list = accs.map(a => `<label class="acc"><input type="checkbox" data-acc="${esc(a.user)}" ${!chosen || chosen.has(a.user) ? "checked" : ""}>
+      <span class="acc-name">${esc(a.user)}</span><span class="hint">${esc(a.host)}</span>
+      <button class="link" style="color:var(--danger)" data-remove="${esc(a.user)}">remove</button></label>`).join("");
+  const addForm = `<div class="addbox">
+      <label>Email address</label><input type="email" id="user" placeholder="you@gmail.com" autocomplete="off">
+      <label>App password <a class="hint" href="https://myaccount.google.com/apppasswords" target="_blank">— create one for Gmail here</a></label>
+      <input type="password" id="pw" placeholder="16 letters from Google" autocomplete="new-password">
+      <details><summary>Not Gmail?</summary><label>IMAP server</label><input type="text" id="host" value="imap.gmail.com">
+        <p class="hint">Outlook/Hotmail: outlook.office365.com · Yahoo: imap.mail.yahoo.com · iCloud: imap.mail.me.com</p></details>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="saveAcc">Check &amp; save</button>
+        ${accs.length ? `<button class="btn quiet" id="cancelAdd">Cancel</button>` : ""}</div>
+      <p class="hint" style="margin-top:8px">The password is checked with the server, then saved in ${esc(S.keychain || "your Keychain")} — you won't need to type it again.</p>
+      <div class="err" id="accErr"></div></div>`;
+  return `<div class="banner">Your answers teach the agent — next time it handles emails like these by itself. Rules are shared across all your mailboxes.</div>
+  <div class="start">
+    <div class="card">
+      <h2>Your mailboxes</h2>
+      ${accs.length ? `<div class="accs">${list}</div>` : `<p>Add a mailbox to get started. You only do this once per address.</p>`}
+      ${accs.length && !showAdd ? `<button class="link" id="showAdd">+ add another mailbox</button>` : addForm}
+      ${accs.length ? `<hr>
+      <div class="row">
+        <div><label>Look back (days)</label><input type="number" id="days" value="14" min="0"></div>
+        <div><label>Max emails this session</label><input type="number" id="limit" value="30" min="1">
+          <div class="hint" id="limitSplit"></div></div>
+      </div>
+      <label class="check"><input type="checkbox" id="incRead" ${lsGet("incRead") === "1" ? "checked" : ""}>
+        <span><b>Include emails I've already read</b> — go through everything in the inbox, not just unread mail. Good for a big clean-up (set Look back to 0 for all dates).</span></label>
+      <label class="check"><input type="checkbox" id="dry" ${lsGet("practice") === "0" ? "" : "checked"}>
+        <span><b>Practice mode</b> — learn and show what it would do, but don't move, delete or mark anything.</span></label>
+      <div class="row" style="gap:10px;flex-wrap:wrap">
+        <button class="btn primary" id="startGmail">Start reading</button>
+        <button class="btn" id="startAuto" title="Go through the whole inbox without asking anything">⚡ Auto mode — whole inbox</button>
+      </div>
+      <p class="hint" style="margin-top:6px"><b>Auto mode</b> goes through the whole inbox (ignores the days and max limits) and asks nothing.
+        Your rules handle what they can; emails that need you are skipped and stay unread for your next session.
+        “Read it first” rules save a note and archive instead. Uses the two checkboxes above.</p>
+      <div class="err" id="startErr"></div>` : ""}
+    </div>
+    <div>
+      <div id="readerBox">${readerCard()}</div>
+      <div class="card" style="margin-top:16px">
+        <h2>Try the demo</h2>
+        <p>12 sample emails. Nothing real is touched; starts fresh each time. <b>Demo in auto mode</b> reuses the rules from your last demo.</p>
+        <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn" id="startDemo">Start demo</button>
+          <button class="btn quiet" id="startDemoAuto">Demo in auto mode</button></div>
+      </div>
+    </div>
+  </div>`;
+}
+function readerCard() {
+  const r = viewReader || S.reader || "builtin", L = S.local || {running: false, models: []}, P = S.pull;
+  const has = m => (L.models || []).some(x => x === m || x === m + ":latest");
+  const opt = (key, title, tag, body) => `<div class="reader ${r === key ? "on" : ""}">
+      <label class="reader-head"><input type="radio" name="reader" value="${key}" ${r === key ? "checked" : ""}>
+        <b>${title}</b><span class="pill ${tag[1]}">${tag[0]}</span></label>
+      ${r === key || key !== "builtin" ? `<div class="reader-body">${body}</div>` : ""}</div>`;
+
+  let local;
+  if (P && P.active) {
+    const pct = P.total ? Math.round(100 * P.completed / P.total) : 0;
+    local = `<p>Downloading <b>${esc(P.model)}</b> — ${esc(P.status)}${P.total ? ` · ${pct}%` : ""}</p>
+      <div class="bar"><div style="width:${pct}%"></div></div><p class="hint">You can keep using the app meanwhile.</p>`;
+  } else if (!L.running) {
+    local = `<p>Runs a free AI model on this Mac — emails never leave your computer.</p>
+      <ol class="steps"><li>Download <a href="https://ollama.com/download" target="_blank">Ollama for Mac</a> and move it to Applications.</li>
+      <li>Open it once (a llama icon appears in the menu bar).</li><li>Come back here — this box updates by itself.</li></ol>
+      ${P && P.error ? `<div class="err">${esc(P.error)}</div>` : ""}`;
+  } else {
+    const known = (S.local_choices || []).map(c => c.model);
+    const installed = (L.models || []).map(m => m.replace(/:latest$/, "")).filter(m => !known.includes(m) && !/embed/i.test(m));
+    const all = [...(S.local_choices || []), ...installed.map(m => ({model: m, size: "", note: "already on your Mac"}))];
+    const inUse = S.reader === "local" ? S.local_model : null;
+    const choices = all.map(c => {
+      const rec = c.model === S.local_model;
+      return `<label class="check" style="margin:6px 0"><input type="radio" name="lm" value="${esc(c.model)}" ${rec ? "checked" : ""}>
+        <span><b>${esc(c.model)}</b>${c.new ? ` <span class="tag new">new</span>` : ""}${c.size ? " · " + esc(c.size) : ""}${has(c.model) ? ` · <span style="color:var(--ok)">downloaded</span>` : ""}${c.model === inUse ? ` · <b style="color:var(--accent)">in use</b>` : ""}<br>
+        <span class="hint">${esc(c.note)}</span></span></label>`;
+    }).join("");
+    const mem = S.memory_gb ? `Your Mac has ${S.memory_gb} GB of memory. ` : "";
+    local = `<p>Ollama is running ✓ ${mem}Pick a model:</p>${choices}
+      <details style="margin:6px 0"><summary>Another model…</summary>
+        <input type="text" id="otherModel" placeholder="e.g. gemma3:4b" style="margin-top:6px">
+        <p class="hint">Any model name from <a href="https://ollama.com/library" target="_blank">ollama.com/library</a>.
+          Bigger models are smarter but slower and need more memory.</p></details>
+      <div class="row" style="margin-top:8px"><button class="btn" id="useLocal">Use this model</button>
+        ${S.reader === "local" && has(S.local_model) ? `<button class="btn quiet" id="updLocal" title="Download a newer version of ${esc(S.local_model)} if Ollama has one">Check for updates</button>` : ""}</div>
+      <p class="hint">Downloads it first if needed. You can switch any time — your rules stay the same.
+        Models marked <b>new</b> are newer than the ones you may have — try one in practice mode first.</p>
+      ${P && P.error ? `<div class="err">${esc(P.error)}</div>` : ""}
+      ${P && P.done ? `<p class="hint">${P.update ? (P.downloaded ? `✓ Updated ${esc(P.model)} to the latest version.` : `✓ ${esc(P.model)} is already the latest version.`) : `Downloaded ${esc(P.model)}.`}</p>` : ""}`;
+  }
+
+  const claude = S.claude
+    ? `<p>Key saved in ${esc(S.keychain)}.</p><button class="btn small" id="rmKey">Remove key</button>`
+    : `<p>Best understanding. Pay-as-you-go API, separate from a Claude subscription; email text is sent to Anthropic.</p>
+       <input type="password" id="apikey" placeholder="sk-ant-…" autocomplete="off">
+       <div class="row" style="margin-top:10px"><button class="btn" id="saveKey">Check &amp; save key</button></div>
+       <p class="hint" style="margin-top:8px">Get a key at <a href="https://platform.claude.com/settings/keys" target="_blank">platform.claude.com</a>.</p>
+       <div class="err" id="keyErr"></div>`;
+
+  return `<div class="card"><h2>Who reads your mail</h2>
+    ${opt("builtin", "Built-in reader", ["free · private", ""], `<p class="hint">Simple pattern matching. Fine for predictable mail.</p>`)}
+    ${opt("local", "Local AI (Ollama)", ["free · private", "running"], local)}
+    ${opt("claude", "Claude", ["paid", ""], claude)}
+    <div class="err" id="readerErr"></div></div>`;
+}
+
+function wireReader() {
+  const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
+  on("#saveKey", async () => {
+    const btn = $("#saveKey"); btn.disabled = true; btn.textContent = "Checking…";
+    try { await api("/api/apikey/set", {key: $("#apikey").value}); toast("Claude is on"); viewReader = null; await refreshReader(); }
+    catch (e) { $("#keyErr").textContent = e.message; btn.disabled = false; btn.textContent = "Check & save key"; }
+  });
+  on("#rmKey", async () => { await api("/api/apikey/remove", {}); await refreshReader(); });
+  document.querySelectorAll("input[name=reader]").forEach(rb => rb.onchange = async () => {
+    const reader = rb.value;
+    const L = S.local || {models: []};
+    const ready = L.models.some(x => x === S.local_model || x === S.local_model + ":latest");
+    if (reader === "claude" && !S.claude) { viewReader = "claude"; paintReader(); return; }      // show key box
+    if (reader === "local" && !(L.running && ready)) { viewReader = "local"; paintReader(); return; } // show setup
+    try { await api("/api/reader", {reader}); viewReader = null; await refreshReader(); }
+    catch (e) { $("#readerErr").textContent = e.message; }
+  });
+  on("#updLocal", async () => {
+    try { await api("/api/local/update", {}); toast("Checking for a newer version…"); await refreshReader(); }
+    catch (e) { $("#readerErr").textContent = e.message; }
+  });
+  on("#useLocal", async () => {
+    const other = ($("#otherModel") || {}).value?.trim();
+    const m = other || (document.querySelector("input[name=lm]:checked") || {}).value;
+    if (!m) return;
+    const L = S.local || {models: []};
+    try {
+      if (L.models.some(x => x === m || x === m + ":latest")) { await api("/api/reader", {reader: "local", model: m}); viewReader = null; toast("Local AI is on"); }
+      else { await api("/api/local/pull", {model: m}); toast("Downloading — this can take a few minutes"); }
+      await refreshReader();
+    } catch (e) { $("#readerErr").textContent = e.message; }
+  });
+}
+function paintReader() { const box = $("#readerBox"); if (box) { box.innerHTML = readerCard(); wireReader(); } }
+async function refreshReader() { const st = await api(`/api/state?since=${events.length}`); Object.assign(S, st); paintReader(); }
+let readerSig = "", viewReader = null;
+
+function wireStart() {
+  const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
+  on("#startDemo", () => start({mode: "demo"}));
+  on("#startDemoAuto", () => start({mode: "demo", auto: true}));
+  on("#showAdd", () => { showAdd = true; render(); });
+  on("#cancelAdd", () => { showAdd = false; render(); });
+  document.querySelectorAll("[data-acc]").forEach(cb => cb.onchange = () =>
+    { chosen = chosen || new Set(); cb.checked ? chosen.add(cb.dataset.acc) : chosen.delete(cb.dataset.acc); });
+  document.querySelectorAll("[data-remove]").forEach(b => b.onclick = async e => {
+    e.preventDefault();
+    if (!confirm(`Remove ${b.dataset.remove}? Its saved password is deleted too. Your rules, notes and to-dos stay.`)) return;
+    await api("/api/accounts/remove", {user: b.dataset.remove}); chosen && chosen.delete(b.dataset.remove); await refreshState();
+  });
+  on("#saveAcc", async () => {
+    const btn = $("#saveAcc"); btn.disabled = true; btn.textContent = "Checking…";
+    try {
+      const r = await api("/api/accounts/add", {user: $("#user").value, password: $("#pw").value, host: $("#host").value});
+      chosen && chosen.add(r.account.user); showAdd = false; toast("Saved — no need to type this password again");
+      await refreshState();
+    } catch (e) { $("#accErr").textContent = e.message; btn.disabled = false; btn.textContent = "Check & save"; }
+  });
+  wireReader();
+  const split = () => {
+    const n = document.querySelectorAll("[data-acc]:checked").length, lim = +($("#limit") || {}).value || 0;
+    const el = $("#limitSplit"); if (!el) return;
+    el.textContent = n > 1 && lim ? `≈ ${Math.ceil(lim / n)} from each of ${n} mailboxes` : "";
+  };
+  document.querySelectorAll("[data-acc]").forEach(cb => cb.addEventListener("change", split));
+  if ($("#limit")) $("#limit").addEventListener("input", split);
+  split();
+  const startGmail = auto => {
+    const dry = $("#dry").checked;
+    const incRead = $("#incRead").checked;
+    try { localStorage.setItem("practice", dry ? "1" : "0"); localStorage.setItem("incRead", incRead ? "1" : "0"); } catch (e) {}
+    const picked = [...document.querySelectorAll("[data-acc]")].filter(cb => cb.checked).map(cb => cb.dataset.acc);
+    start({mode: "gmail", accounts: picked, days: $("#days").value, limit: $("#limit").value, dry_run: dry,
+           include_read: incRead, auto});
+  };
+  on("#startGmail", () => startGmail(false));
+  on("#startAuto", () => startGmail(true));
+}
+async function refreshState() { const st = await api("/api/state?since=0"); S = {...st}; events = st.events || []; build(); render(); loadPanels(); }
+async function start(params) {
+  try { events = []; cards = []; banner = []; draft = ""; lastRenderedCard = 0;
+        await api("/api/start", params); S.status = "connecting"; render(); loadPanels(); }
+  catch (e) { const el = $("#startErr"); if (el) el.textContent = e.message; else toast(e.message); }
+}
+async function newSession() { await api("/api/mode", {mode: S.mode}); events = []; S.status = "idle"; render(); loadPanels(); }
+$("#newBtn").onclick = newSession;
+$("#quitBtn").onclick = async () => {
+  const live = S.status === "running" || S.status === "connecting";
+  if (live && !confirm("A session is running. Quit anyway? Anything not handled yet stays in your inbox for next time.")) return;
+  quitting = true;
+  try { await api("/api/quit", {}); } catch (e) { /* the server may close before answering */ }
+  window.close();   // browsers allow this only for tabs a page opened itself; otherwise the message below stays
+  document.body.innerHTML = `<main style="max-width:520px;margin:18vh auto;padding:0 16px;text-align:center;font:16px/1.5 system-ui,sans-serif">
+    <h1 style="font-size:22px;margin-bottom:8px">✉ Mail Agent has quit</h1>
+    <p style="color:var(--muted,#777)">Your browser doesn't let the page close this tab itself, so you can close it now (⌘W). To use Mail Agent again, open it again.</p></main>`;
+};
+$("#stopBtn").onclick = async () => { await api("/api/stop", {}); toast("Stopping — the rest stays unread for next time"); };
+
+// ------------------------------------------------------------ sidebar
+const TABS = [["todos", "To-dos"], ["notes", "Notes"], ["rules", "Rules"], ["read_log", "Read log"], ["history", "History"]];
+let editingNote = null;
+async function loadPanels() {
+  try { panels = await api("/api/panels"); panelsError = null; }
+  catch (e) { panelsError = e.message || "unknown error"; }
+  if (editingNote === null && !cleanupOpen) renderPanels();   // don't wipe an edit in progress
+}
+let panelsError = null;
+async function saveNote(id) {
+  try { await api(`/api/note/${id}/edit`, {title: $("#noteTitle").value, text: $("#noteText").value});
+        editingNote = null; toast("Note saved"); loadPanels(); }
+  catch (e) { toast(e.message); }
+}
+async function delNote(id) {
+  if (!confirm("Delete this note?")) return;
+  try { await api(`/api/note/${id}/delete`, {}); loadPanels(); } catch (e) { toast(e.message); }
+}
+async function noteToTodo(id, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = "adding…"; }
+  try { const r = await api(`/api/note/${id}/todo`, {});
+        toast(r.already ? `Already a to-do: “${r.title}”` : `Added to-do: “${r.title}”`); }
+  catch (e) { toast(e.message); }
+  await loadPanels();
+}
+function renderPanels() {
+  const count = k => k === "todos" ? (panels.todos || []).filter(t => !t.done).length : (panels[k] || []).length;
+  $("#tabs").innerHTML = TABS.map(([k, l]) =>
+    `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${l}<span class="n">${count(k)}</span></button>`).join("");
+  document.querySelectorAll(".tab").forEach(b => b.onclick = () => { tab = b.dataset.t; editingNote = null; renderPanels(); });
+  let list = panels[tab] || [];
+  let hiddenDone = 0;
+  if (tab === "todos") {
+    const all = list;
+    hiddenDone = all.filter(t => t.hidden).length;
+    list = [...all.filter(t => !t.done), ...all.filter(t => t.done && (!t.hidden || showOldDone))];
+  }
+  const view = ref => ref ? `<button class="link" onclick="openOriginal(${ref})">view email #${ref}</button>` : "";
+  const empty = {todos: "No to-dos yet.", notes: "Nothing saved to notes yet.", rules: "No rules yet — they appear as you answer.",
+                 read_log: "Emails you “just read & archive” show up here.", history: "Every email the agent handles is kept here."}[tab];
+  let html = (tab === "todos" || tab === "notes") ? cleanupBox() : "";
+  html += list.length ? "" : `<div class="empty">${tab === "todos" && hiddenDone ? "Nothing left to do 🎉" : empty}</div>`;
+  for (const x of list) {
+    if (tab === "todos") html += `<div class="item todo ${x.done ? "is-done" : ""} ${rewriting.has("todo:" + x.id) ? "is-rewriting" : ""}">
+        <input type="checkbox" ${x.done ? "checked" : ""} onclick="todoToggle(${x.id}, ${x.done ? "false" : "true"})"
+               title="${x.done ? "Mark as not done" : "Mark as done"}">
+        <div><div class="t">${esc(x.title)}</div>
+        ${rewritingBanner("todo", x.id)}
+        ${whenLine(x)}
+        ${x.about && x.about !== x.title ? `<div class="about">${esc(x.about)}</div>` : ""}
+        <div class="s">${esc(x.source)}${sentLabel(x)}</div>
+        <div class="acts">${x.link ? `<a class="link" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">${esc(x.link_label || "open link")} ↗</a>` : ""}
+          ${view(x.ref)}${x.ref && !/^Unsubscribe from /.test(x.title) && !x.done ? rewriteBtn("todo", x.id) : ""}
+          <button class="link danger" onclick="todoDelete(${x.id})">delete</button></div></div></div>`;
+    if (tab === "notes") html += editingNote === x.id
+      ? `<div class="item note-edit"><input id="noteTitle" value="${esc(x.title)}">
+          <textarea id="noteText">${esc(x.as_text)}</textarea>
+          <div class="acts"><button class="btn small primary" onclick="saveNote(${x.id})">Save</button>
+            <button class="btn small" onclick="editingNote = null; renderPanels()">Cancel</button></div></div>`
+      : `<div class="item ${rewriting.has("note:" + x.id) ? "is-rewriting" : ""}"><div class="t">${esc(x.title)}</div>${rewritingBanner("note", x.id)}
+          ${x.text != null ? `<div class="note-text">${esc(x.text)}</div>`
+            : Object.entries(x.items).map(([k, v]) => `<div class="kv"><b>${esc(k)}:</b> ${esc(v)}</div>`).join("") || `<div class="kv">${esc(x.summary)}</div>`}
+          ${x.link ? `<div class="kv"><a class="link" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">${esc(x.link_label || "open link")} ↗</a></div>` : ""}
+          <div class="s">${esc(x.source)}${sentLabel(x)}</div>
+          <div class="acts">${view(x.ref)}${x.ref && x.text == null ? rewriteBtn("note", x.id) : ""}<button class="link" onclick="editingNote = ${x.id}; renderPanels()">edit</button>
+            ${x.in_todos ? `<button class="link" onclick="tab = 'todos'; renderPanels()" title="Show it in To-dos">✓ in to-dos</button>`
+              : `<button class="link" onclick="noteToTodo(${x.id}, this)" title="Make a to-do from this note (the note stays)">→ to-do</button>`}
+            <button class="link danger" onclick="delNote(${x.id})">delete</button>
+            ${x.edited ? `<span class="s">edited</span>` : ""}</div></div>`;
+    if (tab === "rules") html += `<div class="item"><div class="t">${esc(x.name)}</div>
+        <div class="kv"><b>Does:</b> ${esc(x.actions)}</div>
+        ${x.requires.length ? `<div class="kv"><b>Needs:</b> ${esc(x.requires.join(", "))}</div>` : ""}
+        <div class="kv"><b>Asks you instead if it has:</b> ${esc(x.asks_if.join(", ") || "—")}</div>
+        ${x.instruction ? `<div class="s">You said: “${esc(x.instruction)}”</div>` : ""}
+        <div class="acts"><span class="s">used ${x.used}×</span><button class="link" style="color:var(--danger)" onclick="delRule('${x.id}')">forget this rule</button></div></div>`;
+    if (tab === "read_log") html += `<div class="item"><div class="t">${esc(x.source)} — ${esc(x.subject)}</div>
+        <div class="kv">${esc(x.summary)}</div>
+        ${Object.entries(x.facts || {}).map(([k, v]) => `<div class="kv"><b>${esc(k.replace(/_/g, " "))}:</b> ${esc(Array.isArray(v) ? v.join("; ") : v)}</div>`).join("")}
+        <div class="acts">${view(x.ref)}</div></div>`;
+    if (tab === "history") html += `<div class="item"><div class="t">#${x.ref} ${esc(x.subject)}</div>
+        <div class="s">${esc(x.from)}</div>
+        <div class="acts"><span class="loc ${x.location}">${esc(x.location)}</span>
+          <span class="s">${esc(x.handled_by || "waiting for you")}</span>${view(x.ref)}</div></div>`;
+  }
+  if (tab === "todos" && hiddenDone)
+    html += `<div class="s" style="padding:10px 0"><button class="link" onclick="showOldDone = !showOldDone; renderPanels()">${
+      showOldDone ? "Hide finished from earlier" : `Show ${hiddenDone} finished from earlier`}</button></div>`;
+  const err = panelsError || (panels.errors || {})[tab];
+  if (err) html = `<div class="err" style="padding:12px 0">Couldn't load this list (${esc(err)}). Try closing the app's Terminal window and starting it again.</div>` + html;
+  $("#pane").innerHTML = html;
+}
+let showOldDone = false;
+// "· email from Sep 28" — the lists are sorted by this, newest first
+function sentLabel(x) {
+  if (!x.sent) return "";
+  const d = new Date(x.sent), now = new Date();
+  const opts = {month: "short", day: "numeric", ...(d.getFullYear() !== now.getFullYear() ? {year: "numeric"} : {})};
+  return ` · email from ${esc(d.toLocaleDateString(undefined, opts))}`;
+}
+// a to-do's date on its own line, coloured by how close it is
+function whenLine(x) {
+  const w = x.when; if (!w) return "";
+  if (!w.date) return `<div class="when"><span class="when-chip">📅 ${esc(w.text)}</span></div>`;
+  const d = new Date(w.date + "T12:00:00"), n = w.days;
+  const day = d.toLocaleDateString(undefined, {weekday: "short", month: "short", day: "numeric",
+                                               ...(d.getFullYear() !== new Date().getFullYear() ? {year: "numeric"} : {})});
+  const rel = n === 0 ? "today" : n === 1 ? "tomorrow" : n === -1 ? "yesterday"
+            : n > 0 ? `in ${n} days` : `${-n} days ago`;
+  const cls = x.done ? "" : n < 0 ? "overdue" : n <= 1 ? "soon" : n <= 7 ? "week" : "later";
+  return `<div class="when"><span class="when-chip ${cls}">📅 ${esc(day)}${w.time ? " · " + esc(w.time) : ""} · ${rel}${cls === "overdue" ? " — overdue" : ""}</span>
+    ${w.text ? `<span class="when-text">${esc(w.text)}</span>` : ""}</div>`;
+}
+// ------------------------------------------------------------ clean-up of old notes & to-dos
+let cleanupOpen = false, cuDays = 30, cuKeep = true, cuInfo = null, cuBusy = false;
+function cleanupBox() {
+  if (!cleanupOpen)
+    return `<div class="cu-bar"><span class="s">Newest emails first</span><button class="link" onclick="openCleanup()" title="Remove notes and to-dos about old emails">🧹 Clean up old notes &amp; to-dos</button></div>`;
+  const i = cuInfo;
+  const preview = !i ? `<span class="spin sm"></span> Counting…`
+    : (i.notes || i.todos)
+      ? `Removes <b>${i.notes}</b> of ${i.notes_total} notes and <b>${i.todos}</b> of ${i.todos_total} to-dos.` +
+        (i.kept_upcoming ? ` Keeps ${i.kept_upcoming} to-do${i.kept_upcoming > 1 ? "s" : ""} with a due date still ahead.` : "")
+      : i.kept_upcoming ? `Nothing to remove — the only older ones are ${i.kept_upcoming} to-do${i.kept_upcoming > 1 ? "s" : ""} with a due date still ahead.`
+      : `Nothing that old — all your notes and to-dos are about emails from the last ${i.days} days.`;
+  const last = i && i.last ? `<div class="s" style="margin-top:8px">Last clean-up ${esc(i.last.at.slice(0, 16).replace("T", " "))}:
+      ${i.last.notes} notes, ${i.last.todos} to-dos · <button class="link" onclick="undoCleanup()" ${cuBusy ? "disabled" : ""}>undo it</button></div>` : "";
+  return `<div class="cu-box">
+    <div class="t">🧹 Clean up old notes &amp; to-dos</div>
+    <div class="cu-row">Remove the ones about emails older than
+      <input type="number" id="cuDays" min="1" value="${cuDays}" onchange="cuDays = +this.value || 30; previewCleanup()"> days</div>
+    <label class="check" style="margin:6px 0"><input type="checkbox" ${cuKeep ? "checked" : ""} onchange="cuKeep = this.checked; previewCleanup()">
+      <span>Keep to-dos whose due date is still ahead</span></label>
+    <div class="cu-preview">${preview}</div>
+    <div class="acts" style="margin-top:8px">
+      <button class="btn small primary" onclick="runCleanup()" ${!i || !(i.notes || i.todos) || cuBusy ? "disabled" : ""}>${cuBusy ? "Cleaning…" : "Clean up"}</button>
+      <button class="btn small" onclick="cleanupOpen = false; renderPanels()">Close</button></div>
+    <div class="s" style="margin-top:6px">Age is the email's date, not when the note was made. Removed items are kept in a backup, so you can undo.</div>
+    ${last}</div>`;
+}
+async function previewCleanup() {
+  cuInfo = null; renderPanels();
+  try { cuInfo = await api("/api/cleanup/preview", {days: cuDays, keep_upcoming: cuKeep}); }
+  catch (e) { toast(e.message); cleanupOpen = false; }
+  renderPanels();
+}
+function openCleanup() { cleanupOpen = true; previewCleanup(); }
+async function runCleanup() {
+  if (!confirm(`Remove ${cuInfo.notes} notes and ${cuInfo.todos} to-dos about emails older than ${cuDays} days?`)) return;
+  cuBusy = true; renderPanels();
+  try { const r = await api("/api/cleanup/run", {days: cuDays, keep_upcoming: cuKeep});
+        toast(`Cleaned up: ${r.removed_notes} notes and ${r.removed_todos} to-dos removed`); }
+  catch (e) { toast(e.message); }
+  cuBusy = false; await previewCleanup(); await loadPanelsForce();
+}
+async function undoCleanup() {
+  cuBusy = true; renderPanels();
+  try { const r = await api("/api/cleanup/undo", {}); toast(`Restored ${r.notes} notes and ${r.todos} to-dos`); }
+  catch (e) { toast(e.message); }
+  cuBusy = false; await previewCleanup(); await loadPanelsForce();
+}
+async function loadPanelsForce() {
+  try { panels = await api("/api/panels"); panelsError = null; } catch (e) { panelsError = e.message; }
+  renderPanels();
+}
+const rewriting = new Map();   // "todo:3" -> start time; survives the sidebar redrawing itself
+async function rewrite(kind, id) {
+  const key = `${kind}:${id}`;
+  if (rewriting.has(key)) return;                 // already in progress: ignore extra clicks
+  rewriting.set(key, Date.now()); renderPanels();
+  const tick = setInterval(() => {                 // keep the seconds counter moving
+    const el = document.querySelector(`[data-rw="${key}"] .rw-secs`);
+    if (el) el.textContent = Math.round((Date.now() - rewriting.get(key)) / 1000) + "s";
+  }, 1000);
+  try { const r = await api(`/api/${kind}/${id}/rewrite`, {}); toast(`Rewritten: “${r.title}”`); }
+  catch (e) { toast(e.message); }
+  finally { clearInterval(tick); rewriting.delete(key); await loadPanels(); }
+}
+function rewriteBtn(kind, id) {
+  const key = `${kind}:${id}`;
+  if (rewriting.has(key)) return `<button class="link" disabled>✨ rewriting…</button>`;
+  return `<button class="link" onclick="rewrite('${kind}', ${id})" title="Re-read the original email with AI and rewrite this">✨ rewrite</button>`;
+}
+function rewritingBanner(kind, id) {
+  const key = `${kind}:${id}`;
+  if (!rewriting.has(key)) return "";
+  const secs = Math.round((Date.now() - rewriting.get(key)) / 1000);
+  return `<div class="rw-banner" data-rw="${key}"><span class="spin sm"></span> Re-reading the original email with AI… <span class="rw-secs">${secs}s</span></div>`;
+}
+async function todoToggle(id, done) { await api(`/api/todo/${id}/${done ? "done" : "undo"}`, {}); loadPanels(); }
+async function todoDone(id) { return todoToggle(id, true); }
+async function todoDelete(id) {
+  if (!confirm("Delete this to-do?")) return;
+  await api(`/api/todo/${id}/delete`, {}); loadPanels();
+}
+async function delRule(id) { if (confirm("Forget this rule? Similar emails will be asked about again.")) { await api(`/api/rule/${id}/delete`, {}); loadPanels(); } }
+
+// ------------------------------------------------------------ original email modal
+let modalRef = null;
+async function openOriginal(ref) {
+  try {
+    const {entry, email, view} = await api(`/api/original/${ref}`);
+    modalRef = ref;
+    $("#mHead").innerHTML = `<div class="meta"><span>#${ref}</span></div>
+      <div class="subject">${esc(email.subject)}</div><div class="from">${esc(email.sender)}${email.date ? " · " + esc(email.date) : ""}</div>`;
+    $("#mBody").innerHTML = viewer(ref, view, "modal");
+    $("#mWhere").textContent = `Now in: ${entry.location}` + (entry.handled_by ? ` · ${entry.handled_by}` : "");
+    $("#mRestore").style.display = entry.location === "inbox" ? "none" : "";
+    $("#modalBg").classList.add("show");
+  } catch (e) { toast(e.message); }
+}
+// ------------------------------------------------------------ formatted email viewer
+const viewOpts = {};   // per email: {images, plain}
+function viewer(ref, info, where) {
+  info = info || {};
+  const o = viewOpts[ref] || (viewOpts[ref] = {images: false, plain: false});
+  const src = `/api/original/${ref}/view?images=${o.images ? 1 : 0}&plain=${o.plain ? 1 : 0}`;
+  const tools = [];
+  if (info.has_html) tools.push(`<button class="seg ${o.plain ? "" : "on"}" onclick="setView(${ref}, 'plain', false)">Formatted</button><button class="seg ${o.plain ? "on" : ""}" onclick="setView(${ref}, 'plain', true)">Plain text</button>`);
+  if (info.has_remote_images && !o.plain) tools.push(o.images
+      ? `<span class="hint">Images loaded</span>`
+      : `<span class="hint">🛡 Remote images are blocked so the sender can't tell you opened it.</span><button class="btn small" onclick="setView(${ref}, 'images', true)">Load images</button>`);
+  return `<div class="viewer ${where}" data-ref="${ref}" data-info='${esc(JSON.stringify(info))}'>
+    ${tools.length ? `<div class="viewer-tools">${tools.join("")}</div>` : ""}
+    <iframe class="mailframe" sandbox="allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer" src="${src}" title="Email"></iframe></div>`;
+}
+function setView(ref, key, val) {
+  (viewOpts[ref] = viewOpts[ref] || {images: false, plain: false})[key] = val;
+  document.querySelectorAll(`.viewer[data-ref="${ref}"]`).forEach(el => {
+    const info = JSON.parse(el.dataset.info || "{}");
+    const where = el.classList.contains("modal") ? "modal" : "reading";
+    el.outerHTML = viewer(ref, info, where);
+  });
+}
+
+function closeModal() { $("#modalBg").classList.remove("show"); const ta = $("#answer"); if (ta) ta.focus(); }
+$("#mClose").onclick = closeModal;
+$("#modalBg").onclick = e => { if (e.target.id === "modalBg") closeModal(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+$("#mRestore").onclick = async () => {
+  try { const r = await api(`/api/restore/${modalRef}`, {}); toast(r.result); closeModal(); loadPanels(); }
+  catch (e) { toast(e.message); }
+};
+
+// number keys pick menu options when no text box has focus
+document.addEventListener("keydown", e => {
+  if (!S.question || S.question.kind !== "choice" || $("#modalBg").classList.contains("show")) return;
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= S.question.options.length) answer(String(n - 1));
+});
+
+render(); poll();
+</script>
+</body>
+</html>

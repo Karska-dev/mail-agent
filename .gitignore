@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Build output (Mac app, packages)
+build/
+.build-venv/
+dist/
+*.egg-info/
+
+# Demo data and anything that could hold real mail
+demo_data/
+*.eml
+.email_agent/
+
+# Mac clutter
+.DS_Store

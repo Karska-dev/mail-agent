@@ -1,0 +1,3 @@
+# No dependencies: everything uses the Python standard library.
+# Install with:  pipx install git+https://github.com/Karska-dev/mail-agent
+# For the tests:  pip install -e ".[test]"   (or just: pip install pytest)
