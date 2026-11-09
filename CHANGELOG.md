@@ -5,7 +5,7 @@ All notable changes to this project are listed here. The format follows [Keep a 
 ## [Unreleased]
 
 ### Changed
-- New app and browser-tab icon: lime envelope with a white star on a black tile (source: `packaging/mac/icon.svg`).
+- New app and browser-tab icon: lime envelope with two white sparkles (a big and a small one, like the old icon) on a black tile (source: `packaging/mac/icon.svg`).
 
 ## [1.1.0] — 2026-11-09
 
