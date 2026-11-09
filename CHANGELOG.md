@@ -4,9 +4,8 @@ All notable changes to this project are listed here. The format follows [Keep a 
 
 ## [Unreleased]
 
-- New desktop layout: big centred title, a 3-step start (1 Mailbox, 2 Reader, 3 Start), a "How it works" / "Your setup" panel beside it, and each reader shown with privacy, speed and accuracy bars. The sidebar tabs are unchanged.
-
 ### Changed
+- New desktop layout: big centred title, a 3-step start (1 Mailbox, 2 Reader, 3 Start), a "How it works" / "Your setup" panel beside it, and each reader shown with privacy, speed and accuracy bars. The sidebar tabs are unchanged.
 - New app and browser-tab icon: lime envelope with two white sparkles (a big and a small one, like the old icon) on a black tile (source: `packaging/mac/icon.svg`).
 
 ## [1.1.0] — 2026-11-09
