@@ -13,17 +13,18 @@
   --warn: #7a5a00; --warn-soft: #f1ead6; --ok: #2f6b3a; --ok-soft: #e1ece3; --danger: #a3261e;
   --you: #efefed; --you-ink: #222222; --shadow: none;
   --acc: #c8f31d; --acc-ink: #111111;   /* the small bright accent; the user can change it under Look */
+  --title: #555555;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111111; --panel: #1b1b1b; --panel-2: #242424; --ink: #e9e9e7; --muted: #9a9a96;
     --line: #3c3c3a; --accent: #e9e9e7; --accent-ink: #111111; --accent-soft: #2c2c2a;
     --warn: #e8c46a; --warn-soft: #2f2a1a; --ok: #8fd19a; --ok-soft: #1d2d21; --danger: #ff9a90;
-    --you: #242424; --you-ink: #e9e9e7;
+    --you: #242424; --you-ink: #e9e9e7; --title: #b5b5b1;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111111; --panel: #1b1b1b; --panel-2: #242424; --ink: #e9e9e7; --muted: #9a9a96;
+  --title: #b5b5b1; --bg: #111111; --panel: #1b1b1b; --panel-2: #242424; --ink: #e9e9e7; --muted: #9a9a96;
   --line: #3c3c3a; --accent: #e9e9e7; --accent-ink: #111111; --accent-soft: #2c2c2a;
   --warn: #e8c46a; --warn-soft: #2f2a1a; --ok: #8fd19a; --ok-soft: #1d2d21; --danger: #ff9a90;
   --you: #242424; --you-ink: #e9e9e7;
@@ -38,8 +39,8 @@ button, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: var(--accent); }
 
-header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px;
-  padding: 12px 20px; background: var(--panel); border-bottom: 1px solid var(--line); }
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 20px;
+  padding: 28px 48px 0; background: var(--bg); }
 header h1 { font-size: 17px; margin: 0; font-weight: 650; }
 .pill { font-size: 12px; padding: 2px 9px; border-radius: 99px; background: var(--panel-2); color: var(--muted); }
 .pill.running { background: var(--accent-soft); color: var(--accent); }
@@ -54,9 +55,10 @@ header .spacer { flex: 1; }
 .btn.small { padding: 3px 10px; font-size: 13px; border-radius: 7px; }
 .btn:disabled { opacity: .5; cursor: default; }
 
-.layout { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 20px; max-width: 1280px;
-  margin: 0 auto; padding: 20px; }
-@media (max-width: 900px) { .layout { grid-template-columns: 1fr; padding: 12px 16px; } }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; max-width: 1360px;
+  margin: 0 auto; padding: 18px 48px 40px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; padding: 12px 16px; }
+  header { padding: 16px 16px 0; grid-template-columns: auto 1fr auto; gap: 10px; } }
 
 /* ---------- start screen ---------- */
 .start { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
@@ -188,9 +190,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0 4px; }
 .stat span { font-size: 12px; color: var(--muted); }
 
 /* ---------- sidebar ---------- */
-aside { position: sticky; top: 76px; align-self: start; max-height: calc(100vh - 96px); display: flex; flex-direction: column;
+.side { position: sticky; top: 16px; align-self: start; max-height: calc(100vh - 32px); display: flex; flex-direction: column; gap: 16px; min-height: 0; }
+aside { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column;
   background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
-@media (max-width: 900px) { aside { position: static; max-height: none; } }
+@media (max-width: 900px) { .side { position: static; max-height: none; } aside { max-height: none; } }
 .tabs { display: flex; flex-wrap: wrap; flex: none; border-bottom: 1px solid var(--line); background: var(--panel); }
 .tab { flex: 1 1 auto; padding: 10px 4px; border: 0; background: none; font-size: 12.5px; color: var(--muted);
   border-bottom: 2px solid transparent; white-space: nowrap; }
@@ -268,7 +271,45 @@ aside { position: sticky; top: 76px; align-self: start; max-height: calc(100vh -
 body { font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 14px; }
 header h1, .card h2, .ins-h { font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   font-weight: 400; letter-spacing: .06em; }
-header h1 { font-size: 20px; }
+header h1 { font-size: clamp(34px, 4.6vw, 64px); text-transform: uppercase; letter-spacing: .06em; text-align: center; color: var(--title);
+  line-height: 1.15; margin: 0; }
+.h-mid { text-align: center; }
+.h-mid .hint { min-height: 18px; margin-top: 2px; }
+#info:empty { display: none; }
+.h-right .pill { white-space: nowrap; }
+.h-right { display: flex; gap: 10px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.pill { text-transform: uppercase; letter-spacing: .06em; padding: 6px 18px; font-size: 13px; }
+.steps-nav { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 10px 0 0; padding: 0 16px; }
+.steps-nav:empty { display: none; }
+.steps-nav .dash { color: var(--muted); }
+.stepchip { border: 1.5px solid var(--ink); border-radius: 99px; background: transparent; padding: 5px 16px; font-size: 14px; }
+.stepchip.on { background: var(--acc); color: var(--acc-ink); font-weight: 600; }
+.panel-h { margin: 0 0 10px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.panel-h.mt { margin-top: 20px; }
+.step-title { font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 400; letter-spacing: .05em;
+  font-size: 26px; margin: 0 0 6px; }
+.step-lead { color: var(--muted); margin: 0 0 14px; }
+.step-nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 14px; }
+.brk { position: relative; padding: 26px 30px; }
+.brk::before, .brk::after, .brk > i::before, .brk > i::after { content: ""; position: absolute; width: 26px; height: 26px; border: 4px solid var(--ink); }
+.brk::before { left: 0; top: 0; border-right: 0; border-bottom: 0; } .brk::after { right: 0; top: 0; border-left: 0; border-bottom: 0; }
+.brk > i::before { left: 0; bottom: 0; border-right: 0; border-top: 0; } .brk > i::after { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+.brk.card { border: 0; background: transparent; }
+input[type=checkbox], input[type=radio] { accent-color: var(--ink); }
+.how { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 14px; }
+.how li { display: flex; gap: 10px; } .how b { flex: none; width: 14px; }
+.kvrow { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px dashed var(--line); font-size: 14px; }
+.kvrow span { color: var(--muted); } .kvrow b { font-weight: 600; text-align: right; }
+.acc { border: 0; border-top: 1px dashed var(--line); border-radius: 0; padding: 9px 2px; }
+.accs { gap: 0; border-bottom: 1px dashed var(--line); }
+.reader { display: grid; grid-template-columns: 1fr 200px; gap: 14px; align-items: start; border: 1.5px dashed var(--line); border-radius: 14px; padding: 14px 16px; margin-top: 12px; background: transparent; }
+.reader.on { border: 2px solid var(--ink); background: var(--panel); }
+.reader-head .pill { margin-left: 6px; padding: 1px 10px; font-size: 11px; }
+.meters { display: grid; gap: 3px; font-size: 11px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; padding-top: 3px; }
+.meters div { display: flex; align-items: center; gap: 8px; } .meters span { width: 74px; }
+.meters i { width: 12px; height: 10px; border: 1.5px solid var(--ink); background: var(--ink); display: inline-block; margin-right: 3px; }
+.meters i.off { background: transparent; }
+@media (max-width: 1100px) { .reader { grid-template-columns: 1fr; } }
 .btn { border: 1.5px solid var(--ink); border-radius: 99px; padding: 7px 16px; background: transparent; }
 .btn:hover { border-color: var(--ink); background: var(--panel-2); }
 .btn.primary { background: var(--acc); color: var(--acc-ink); border-color: var(--ink); font-weight: 600; }
@@ -335,21 +376,25 @@ header h1 { font-size: 20px; }
 </head>
 <body>
 <header>
-  <h1>✉ Mail Agent</h1>
-  <span id="status" class="pill">idle</span>
-  <span id="who" class="hint"></span>
-  <span class="spacer"></span>
-  <button id="stopBtn" class="btn danger" style="display:none">Stop for now</button>
-  <button id="newBtn" class="btn quiet" style="display:none">New session</button>
-  <button id="quitBtn" class="btn quiet" title="Quit Mail Agent (anything not handled stays in your inbox)">Quit</button>
+  <div class="h-left"><button id="quitBtn" class="btn" title="Quit Mail Agent (anything not handled stays in your inbox)">Quit</button></div>
+  <div class="h-mid"><h1>Mail Agent</h1><div id="who" class="hint"></div></div>
+  <div class="h-right">
+    <button id="stopBtn" class="btn danger" style="display:none">Stop for now</button>
+    <button id="newBtn" class="btn" style="display:none">New session</button>
+    <span id="status" class="pill">idle</span>
+  </div>
 </header>
+<nav id="steps" class="steps-nav"></nav>
 
 <div class="layout">
   <main id="main"></main>
-  <aside>
-    <div class="tabs" id="tabs"></div>
-    <div class="pane" id="pane"></div>
-  </aside>
+  <div class="side">
+    <div id="info"></div>
+    <aside>
+      <div class="tabs" id="tabs"></div>
+      <div class="pane" id="pane"></div>
+    </aside>
+  </div>
 </div>
 
 <div class="modal-bg" id="modalBg">
@@ -445,6 +490,7 @@ function render() {
 
   const main = $("#main");
   const ta = $("#answer"); if (ta) draft = ta.value;
+  paintInfo();
   if (S.status === "idle") { main.innerHTML = startScreen(); wireStart(); return; }
 
   let html = "";
@@ -594,30 +640,79 @@ async function answer(value) {
 // ------------------------------------------------------------ start screen
 let chosen = null;          // which saved mailboxes are ticked (null = all)
 let showAdd = false;
+let step = null;           // 1 mailbox, 2 reader, 3 start (null = decide from the saved mailboxes)
+const STEPS = [[1, "1 Mailbox"], [2, "2 Reader"], [3, "3 Start"]];
+function curStep() { if (step === null && S.accounts) step = S.accounts.length ? 3 : 1; return step === null ? 1 : step; }
+function stepsNav() {
+  const cur = curStep();
+  return STEPS.map(([n, l], i) => `${i ? `<span class="dash">—</span>` : ""}<button class="stepchip ${n === cur ? "on" : ""}" data-step="${n}">${l}</button>`).join("");
+}
+function infoPanel() {
+  if (S.status !== "idle") return "";
+  const cur = curStep(), accs = S.accounts || [];
+  const readerName = (S.reader === "local" ? "Local AI · " + (S.local_model || "") : S.reader === "claude" ? "Claude" : "Built-in reader");
+  if (cur === 3 && accs.length) return `<div class="card"><h3 class="panel-h">Your setup</h3>
+      <div class="kvrow"><span>Reader</span><b>${esc(readerName)}</b></div>
+      <div class="kvrow"><span>Mailboxes</span><b>${accs.length}</b></div>
+      <div class="kvrow"><span>Rules learned</span><b>${(panels.rules || []).length}</b></div>
+      <h3 class="panel-h mt">New here?</h3>
+      <p class="hint" style="margin:0 0 10px">12 sample emails. Nothing real is touched; starts fresh each time.</p>
+      <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn" id="startDemo" style="border-style:dashed">Try the demo</button>
+        <button class="btn quiet" id="startDemoAuto" title="Reuses the rules from your last demo">Demo in auto mode</button></div></div>`;
+  return `<div class="card"><h3 class="panel-h">How it works</h3>
+      <ul class="how"><li><b>1</b><span>It reads a new email and asks what to do, in plain words.</span></li>
+        <li><b>2</b><span>Your answer becomes a rule for that sender.</span></li>
+        <li><b>3</b><span>Next time it handles similar mail on its own. Rules are shared across all your mailboxes.</span></li></ul>
+      <h3 class="panel-h mt">Safe to try</h3>
+      <p class="hint" style="margin:0">Practice mode changes nothing. Every handled email is kept so you can put it back.</p></div>`;
+}
+function paintInfo() {
+  const st = $("#steps"), box = $("#info");
+  if (st) st.innerHTML = S.status === "idle" ? stepsNav() : "";
+  if (box) box.innerHTML = infoPanel();
+  document.querySelectorAll(".stepchip").forEach(b => b.onclick = () => { step = +b.dataset.step; render(); });
+  const demo = (id, p) => { const el = $(id, box); if (el) el.onclick = () => start(p); };
+  demo("#startDemo", {mode: "demo"}); demo("#startDemoAuto", {mode: "demo", auto: true});
+}
 function startScreen() {
   const accs = S.accounts || [];
   if (chosen === null && S.accounts) chosen = new Set(accs.map(a => a.user));
+  const cur = curStep();
   const list = accs.map(a => `<label class="acc"><input type="checkbox" data-acc="${esc(a.user)}" ${!chosen || chosen.has(a.user) ? "checked" : ""}>
       <span class="acc-name">${esc(a.user)}</span><span class="hint">${esc(a.host)}</span>
       <button class="link" style="color:var(--danger)" data-remove="${esc(a.user)}">remove</button></label>`).join("");
   const addForm = `<div class="addbox">
       <label>Email address</label><input type="email" id="user" placeholder="you@gmail.com" autocomplete="off">
-      <label>App password <a class="hint" href="https://myaccount.google.com/apppasswords" target="_blank">— create one for Gmail here</a></label>
-      <input type="password" id="pw" placeholder="16 letters from Google" autocomplete="new-password">
-      <details><summary>Not Gmail?</summary><label>IMAP server</label><input type="text" id="host" value="imap.gmail.com">
+      <label>App password · 16 letters from Google · <a class="hint" href="https://myaccount.google.com/apppasswords" target="_blank">create one here</a></label>
+      <input type="password" id="pw" placeholder="xxxx xxxx xxxx xxxx" autocomplete="new-password">
+      <details><summary>Not Gmail? Use another server</summary><label>IMAP server</label><input type="text" id="host" value="imap.gmail.com">
         <p class="hint">Outlook/Hotmail: outlook.office365.com · Yahoo: imap.mail.yahoo.com · iCloud: imap.mail.me.com</p></details>
-      <div class="row" style="margin-top:12px"><button class="btn primary" id="saveAcc">Check &amp; save</button>
-        ${accs.length ? `<button class="btn quiet" id="cancelAdd">Cancel</button>` : ""}</div>
+      <div class="row" style="margin-top:12px;gap:10px;flex-wrap:wrap"><button class="btn primary" id="saveAcc">Check &amp; save</button>
+        ${accs.length ? `<button class="btn quiet" id="cancelAdd">Cancel</button>` : `<button class="btn" id="startDemoB" style="border-style:dashed">Try the demo first</button>`}</div>
       <p class="hint" style="margin-top:8px">The password is checked with the server, then saved in ${esc(S.keychain || "your Keychain")} — you won't need to type it again.</p>
       <div class="err" id="accErr"></div></div>`;
-  return `<div class="banner">Your answers teach the agent — next time it handles emails like these by itself. Rules are shared across all your mailboxes.</div>
-  <div class="start">
-    <div class="card">
-      <h2>Your mailboxes</h2>
-      ${accs.length ? `<div class="accs">${list}</div>` : `<p>Add a mailbox to get started. You only do this once per address.</p>`}
-      ${accs.length && !showAdd ? `<button class="link" id="showAdd">+ add another mailbox</button>` : addForm}
-      ${accs.length ? `<hr>
-      <div class="row">
+
+  if (cur === 1) return `<div class="card brk"><i></i>
+      <h2 class="step-title">${accs.length ? "Your mailboxes" : "Add your mailbox"}</h2>
+      <p class="step-lead">${accs.length ? "Tick the ones to read. You only add each address once." : "You do this once per address. The password is kept in your Mac Keychain and checked with your mail server, nowhere else."}</p>
+      ${accs.length ? `<div class="accs">${list}</div>` : ""}
+      ${accs.length && !showAdd ? `<button class="link" id="showAdd" style="margin-top:10px">+ add another mailbox</button>
+        <div class="step-nav"><button class="btn primary" data-step="2">Continue</button></div>` : addForm}</div>`;
+
+  if (cur === 2) return `<div><h2 class="step-title">Who reads your mail?</h2>
+      <p class="step-lead">You can change this any time. With the first two, no email text leaves your computer.</p>
+      <div id="readerBox">${readerCard()}</div>
+      <div class="step-nav"><button class="btn" data-step="1">Back</button><button class="btn primary" data-step="3">Continue</button></div></div>`;
+
+  if (!accs.length) return `<div class="card"><h2 class="step-title">Which inbox, and how much?</h2>
+      <p class="step-lead">Add a mailbox first, or try the demo.</p>
+      <div class="row" style="gap:10px"><button class="btn primary" data-step="1">Add a mailbox</button></div></div>`;
+  return `<div class="card" style="padding:22px 26px">
+      <h2 class="step-title">Which inbox, and how much?</h2>
+      <h3 class="panel-h" style="margin-top:14px">Mailboxes</h3>
+      <div class="accs">${list}</div>
+      <button class="link" id="showAddB" style="margin-top:10px">+ add another mailbox</button>
+      <div class="row" style="margin-top:18px">
         <div><label>Look back (days)</label><input type="number" id="days" value="14" min="0"></div>
         <div><label>Max emails this session</label><input type="number" id="limit" value="30" min="1">
           <div class="hint" id="limitSplit"></div></div>
@@ -626,33 +721,25 @@ function startScreen() {
         <span><b>Include emails I've already read</b> — go through everything in the inbox, not just unread mail. Good for a big clean-up (set Look back to 0 for all dates).</span></label>
       <label class="check"><input type="checkbox" id="dry" ${lsGet("practice") === "0" ? "" : "checked"}>
         <span><b>Practice mode</b> — learn and show what it would do, but don't move, delete or mark anything.</span></label>
-      <div class="row" style="gap:10px;flex-wrap:wrap">
+      <div class="row" style="gap:10px;flex-wrap:wrap;margin-top:6px">
         <button class="btn primary" id="startGmail">Start reading</button>
         <button class="btn" id="startAuto" title="Go through the whole inbox without asking anything">⚡ Auto mode — whole inbox</button>
       </div>
-      <p class="hint" style="margin-top:6px"><b>Auto mode</b> goes through the whole inbox (ignores the days and max limits) and asks nothing.
+      <p class="hint" style="margin-top:8px"><b>Auto mode</b> goes through the whole inbox (ignores the days and max limits) and asks nothing.
         Your rules handle what they can; emails that need you are skipped and stay unread for your next session.
         “Read it first” rules save a note and archive instead. Uses the two checkboxes above.</p>
-      <div class="err" id="startErr"></div>` : ""}
-    </div>
-    <div>
-      <div id="readerBox">${readerCard()}</div>
-      <div class="card" style="margin-top:16px">
-        <h2>Try the demo</h2>
-        <p>12 sample emails. Nothing real is touched; starts fresh each time. <b>Demo in auto mode</b> reuses the rules from your last demo.</p>
-        <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn" id="startDemo">Start demo</button>
-          <button class="btn quiet" id="startDemoAuto">Demo in auto mode</button></div>
-      </div>
-    </div>
-  </div>`;
+      <div class="err" id="startErr"></div></div>`;
 }
 function readerCard() {
   const r = viewReader || S.reader || "builtin", L = S.local || {running: false, models: []}, P = S.pull;
   const has = m => (L.models || []).some(x => x === m || x === m + ":latest");
-  const opt = (key, title, tag, body) => `<div class="reader ${r === key ? "on" : ""}">
+  const METERS = {builtin: [5, 5, 2], local: [5, 3, 4], claude: [2, 4, 5]};
+  const meters = key => `<div class="meters">${["Privacy", "Speed", "Accuracy"].map((n, i) =>
+    `<div><span>${n}</span><b>${[0, 1, 2, 3, 4].map(k => `<i class="${k < METERS[key][i] ? "" : "off"}"></i>`).join("")}</b></div>`).join("")}</div>`;
+  const opt = (key, title, tag, body) => `<div class="reader ${r === key ? "on" : ""}"><div>
       <label class="reader-head"><input type="radio" name="reader" value="${key}" ${r === key ? "checked" : ""}>
         <b>${title}</b><span class="pill ${tag[1]}">${tag[0]}</span></label>
-      ${r === key || key !== "builtin" ? `<div class="reader-body">${body}</div>` : ""}</div>`;
+      ${r === key || key !== "builtin" ? `<div class="reader-body">${body}</div>` : ""}</div>${meters(key)}</div>`;
 
   let local;
   if (P && P.active) {
@@ -697,7 +784,7 @@ function readerCard() {
        <p class="hint" style="margin-top:8px">Get a key at <a href="https://platform.claude.com/settings/keys" target="_blank">platform.claude.com</a>.</p>
        <div class="err" id="keyErr"></div>`;
 
-  return `<div class="card"><h2>Who reads your mail</h2>
+  return `<div>
     ${opt("builtin", "Built-in reader", ["free · private", ""], `<p class="hint">Simple pattern matching. Fine for predictable mail.</p>`)}
     ${opt("local", "Local AI (Ollama)", ["free · private", "running"], local)}
     ${opt("claude", "Claude", ["paid", ""], claude)}
@@ -737,13 +824,16 @@ function wireReader() {
     } catch (e) { $("#readerErr").textContent = e.message; }
   });
 }
-function paintReader() { const box = $("#readerBox"); if (box) { box.innerHTML = readerCard(); wireReader(); } }
+function paintReader() { const box = $("#readerBox"); if (box) { box.innerHTML = readerCard(); wireReader(); } paintInfo(); }
 async function refreshReader() { const st = await api(`/api/state?since=${events.length}`); Object.assign(S, st); paintReader(); }
 let readerSig = "", viewReader = null;
 
 function wireStart() {
   const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
+  document.querySelectorAll("[data-step]").forEach(b => b.onclick = () => { step = +b.dataset.step; render(); });
   on("#startDemo", () => start({mode: "demo"}));
+  on("#startDemoB", () => start({mode: "demo"}));
+  on("#showAddB", () => { step = 1; showAdd = true; render(); });
   on("#startDemoAuto", () => start({mode: "demo", auto: true}));
   on("#showAdd", () => { showAdd = true; render(); });
   on("#cancelAdd", () => { showAdd = false; render(); });
@@ -758,7 +848,7 @@ function wireStart() {
     const btn = $("#saveAcc"); btn.disabled = true; btn.textContent = "Checking…";
     try {
       const r = await api("/api/accounts/add", {user: $("#user").value, password: $("#pw").value, host: $("#host").value});
-      chosen && chosen.add(r.account.user); showAdd = false; toast("Saved — no need to type this password again");
+      chosen && chosen.add(r.account.user); showAdd = false; step = 2; toast("Saved — no need to type this password again");
       await refreshState();
     } catch (e) { $("#accErr").textContent = e.message; btn.disabled = false; btn.textContent = "Check & save"; }
   });
