@@ -2,6 +2,19 @@
 
 All notable changes to this project are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-11-09
+
+### Added
+- **Insights** tab: how much the agent handles on its own, questions per 100 emails (and how that changed), emails you put back after an automatic action, the most-used rules, senders you keep being asked about, what was cleared out, median read time and an estimate of time saved. Practice and demo mail are not counted. Also available at `/api/insights`.
+- **Look** tab: Light, Dark or Match my Mac, and an accent colour (lime by default; orange, blue or pink). Saved in the browser.
+- The session summary lists the emails skipped in auto mode, and says which sender you were asked about most.
+- A move the mail server does not confirm is flagged clearly in the email's card; the email stays in your inbox.
+
+### Changed
+- New look: grey, dashed panels, round buttons and one small bright accent. System fonts only; nothing is loaded from the internet.
+- The activity log now also records the outcome (auto, asked, one-off, failed), the rule used and the reading time of each email.
+- Putting an email back and deleting a rule are recorded in `events.json` in the data folder, so Insights can count them.
+
 ## [1.0.0] — 2026-11-08
 
 First public release.
