@@ -28,6 +28,13 @@ class JsonList:
         self.path.write_text(json.dumps(self.items, indent=2, ensure_ascii=False))
 
 
+class Events(JsonList):
+    """Things that happen outside a session but matter for Insights: put-backs and rule deletions."""
+
+    def record(self, kind: str, **fields: Any) -> dict[str, Any]:
+        return self.append({"at": _now(), "type": kind, **fields})
+
+
 def _fmt(value: Any) -> str:
     if isinstance(value, list):
         return "; ".join(str(v) for v in value)

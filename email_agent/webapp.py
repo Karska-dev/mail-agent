@@ -22,14 +22,15 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from .agent import EmailAgent
+from .agent import EmailAgent, outcome_of, rule_id_of
 from .demo import DEMO_EMAILS
 from . import cleanup, keychain, local_ai, render
 from .llm import DEFAULT_MODEL, check_key, claude_available, make_engines
 from .mailbox import IMAPMailbox, LocalMailbox
 from .models import EXTRACT_FIELDS, describe_actions
 from .rules import SHORT, RuleStore
-from .stores import Accounts, Notes, Originals, ReadLog, Todos
+from . import stats
+from .stores import Accounts, Events, Notes, Originals, ReadLog, Todos
 from .ui import STOP_RE, StopSession
 
 WEB_DIR = Path(__file__).parent / "web"
@@ -650,7 +651,11 @@ class App:
         self._stores()[1].delete(note_id)
 
     def delete_rule(self, rule_id: str) -> None:
-        self._stores()[2].delete(rule_id)
+        rules = self._stores()[2]
+        rule = rules.get(rule_id)
+        if rules.delete(rule_id) and rule:
+            Events(self.data_dir / "events.json").record(
+                "rule_deleted", rule_id=rule_id, name=rule.name, times_applied=rule.times_applied)
 
     def restore(self, ref: int) -> str:
         originals = self._stores()[4]
@@ -673,6 +678,11 @@ class App:
             mb.close()
         if result.startswith(("moved back", "already")):
             originals.update(ref, location="inbox")
+            if result.startswith("moved back"):
+                handled_by = (entry or {}).get("handled_by") or ""
+                Events(self.data_dir / "events.json").record(
+                    "restore", ref=ref, email_id=email.id, was_in=(entry or {}).get("location"),
+                    handled_by=handled_by, rule_id=rule_id_of(handled_by), outcome=outcome_of(handled_by))
         return result
 
     def set_mode(self, mode: str) -> None:
@@ -716,6 +726,9 @@ def make_handler(app: App):
                     return self._json(app.state(since))
                 if parts == ["api", "panels"]:
                     return self._json(app.panels())
+                if parts == ["api", "insights"]:
+                    days = max(1, min(int(parse_qs(url.query).get("days", ["30"])[0]), 365))
+                    return self._json(stats.compute(app.real_dir, days))
                 if parts[:2] == ["api", "original"] and len(parts) == 3:
                     return self._json(app.original(int(parts[2])))
                 if parts[:2] == ["api", "original"] and len(parts) == 4 and parts[3] == "view":

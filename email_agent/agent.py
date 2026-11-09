@@ -66,6 +66,25 @@ def order_actions(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return show + body + unsub + terminal
 
 
+def rule_id_of(source: str) -> str | None:
+    """The rule behind a log entry's `source` text ("rule r2", "workflow of r2", ...), if any."""
+    m = re.match(r"(?:rule|workflow of) (r\d+)", source)
+    return m.group(1) if m else None
+
+
+def outcome_of(source: str, failed: bool = False) -> str:
+    """One word for how an email was handled: auto, asked, one_off, practice or failed."""
+    if "(practice)" in source:
+        return "practice"
+    if failed or source.endswith("— failed") or "(failed)" in source:
+        return "failed"
+    if rule_id_of(source):
+        return "auto"
+    if source.startswith("one-off"):
+        return "one_off"
+    return "asked"
+
+
 class EmailAgent:
     def __init__(self, data_dir: Path, mailbox: Mailbox, analyzer, parser, ui, min_confidence: float = 0.6,
                  interactive: bool = True, account: str | None = None):
@@ -624,7 +643,9 @@ class EmailAgent:
         ref = self.originals.ref_for(email.id)
         self.log.append({"at": datetime.now().isoformat(timespec="seconds"), "ref": ref, "email_id": email.id,
                          "from": email.sender, "subject": email.subject, "category": analysis.category,
-                         "source": source, "actions": actions, "results": results})
+                         "source": source, "actions": actions, "results": results,
+                         "outcome": outcome_of(source, failed), "rule_id": rule_id_of(source),
+                         "seconds": getattr(analysis, "seconds", 0) or 0})
         update: dict[str, Any] = {"handled_by": source + (" — failed" if failed else "")}
         if location:
             update["location"] = location
