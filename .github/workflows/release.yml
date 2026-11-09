@@ -1,9 +1,12 @@
 name: release
 
-# Push a tag like v1.0.0 to build "Mail Agent.app" (Apple Silicon) and publish it as a GitHub release.
+# Builds "Mail Agent.app" (Apple Silicon) and publishes it as a GitHub release named after the version in
+# email_agent/__init__.py. Start it by pushing a tag like v1.0.0, or from the Actions tab: release → Run workflow
+# (the workflow then creates the tag itself).
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,10 +20,19 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Check the tag matches the app version
+      - name: Work out the version and tag
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=$(python -c "import re;print(re.search(r'__version__ = \"([^\"]+)\"', open('email_agent/__init__.py').read()).group(1))")
-          test "v$VERSION" = "$GITHUB_REF_NAME" || { echo "Tag $GITHUB_REF_NAME doesn't match version $VERSION"; exit 1; }
+          TAG="v$VERSION"
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "$TAG" ]; then
+            echo "Tag $GITHUB_REF_NAME doesn't match version $VERSION"; exit 1
+          fi
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "Release $TAG already exists - raise the version in email_agent/__init__.py first"; exit 1
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
 
       - name: Install build tools
         run: python -m pip install pyinstaller pytest
@@ -51,5 +63,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" Mail-Agent-mac-apple-silicon.zip \
-            --title "Mail Agent ${GITHUB_REF_NAME#v}" --notes-file packaging/mac/release-notes.md
+          gh release create "$TAG" Mail-Agent-mac-apple-silicon.zip --target "$GITHUB_SHA" \
+            --title "Mail Agent ${TAG#v}" --notes-file packaging/mac/release-notes.md

@@ -67,7 +67,7 @@ Newer models skip their slow "think out loud" step here, since it isn't needed f
 - It uses the same data (`~/.email_agent`) and Keychain entries as the Python version, so you can switch between them.
 - First launch: the app isn't signed by Apple. On macOS 15 or newer, open **System Settings → Privacy & Security** and click **Open Anyway**; on macOS 14 or older, right-click the app and choose **Open**.
 
-**Build it yourself:** double-click `packaging/mac/build-app.command` in the project folder. It sets up PyInstaller in a private folder (`.build-venv`) and puts **Mail Agent.app** in `dist/`. On GitHub, pushing a version tag (for example `v1.0.0`) builds, checks and publishes the app automatically (`.github/workflows/release.yml`).
+**Build it yourself:** double-click `packaging/mac/build-app.command` in the project folder. It sets up PyInstaller in a private folder (`.build-venv`) and puts **Mail Agent.app** in `dist/`. On GitHub, a release is made by **Actions → release → Run workflow**, or by pushing a version tag such as `v1.0.0`: it builds, checks and publishes the app for the version in `email_agent/__init__.py` (`.github/workflows/release.yml`).
 
 ## Quick start (terminal)
 
