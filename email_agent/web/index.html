@@ -372,6 +372,38 @@ input[type=checkbox], input[type=radio] { accent-color: var(--ink); }
 .swatch i { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--ink); display: block; }
 .swatch small { color: var(--muted); font-size: 10px; letter-spacing: .06em; }
 .preview { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+/* compact: the start screen should fit a laptop window without scrolling */
+body { font-size: 13px; }
+header { padding: 14px 32px 0; }
+header h1 { font-size: clamp(26px, 5.2vh, 46px); }
+.h-mid .hint { min-height: 0; margin: 0; }
+.pill { padding: 4px 14px; font-size: 12px; }
+.steps-nav { margin: 8px 0 0; }
+.stepchip { padding: 3px 14px; font-size: 13px; }
+.layout { padding: 12px 32px 20px; gap: 20px; }
+.step-title { font-size: 21px; margin-bottom: 4px; }
+.step-lead { font-size: 13px; margin-bottom: 10px; }
+.card { padding: 14px 18px; }
+.card p { margin-bottom: 8px; }
+label { margin: 8px 0 3px; font-size: 12px; }
+input[type=text], input[type=password], input[type=email], input[type=number], textarea { padding: 6px 9px; }
+.check { margin: 8px 0; font-size: 13px; }
+.acc { padding: 5px 2px; font-size: 13px; }
+.brk { padding: 18px 26px; }
+.brk::before, .brk::after, .brk > i::before, .brk > i::after { width: 22px; height: 22px; border-width: 3px; }
+.reader { padding: 10px 14px; margin-top: 8px; }
+.reader-head { font-size: 14px; }
+.reader-body { margin-top: 4px; font-size: 13px; }
+.reader-body p { margin: 2px 0 6px; }
+.reader-body label.check { margin: 4px 0; }
+.reader.on .reader-body { max-height: 38vh; overflow-y: auto; }
+.kvrow { padding: 5px 0; font-size: 13px; }
+.how { gap: 6px; font-size: 13px; }
+.panel-h.mt { margin-top: 14px; }
+.btn { padding: 5px 14px; }
+.step-nav { margin-top: 10px; }
+.side { gap: 12px; top: 12px; max-height: calc(100vh - 24px); }
+.pane { padding: 4px 12px 10px; }
 </style>
 </head>
 <body>
@@ -718,16 +750,14 @@ function startScreen() {
           <div class="hint" id="limitSplit"></div></div>
       </div>
       <label class="check"><input type="checkbox" id="incRead" ${lsGet("incRead") === "1" ? "checked" : ""}>
-        <span><b>Include emails I've already read</b> — go through everything in the inbox, not just unread mail. Good for a big clean-up (set Look back to 0 for all dates).</span></label>
+        <span><b>Include emails I've already read</b> — not just unread. For a big clean-up, set Look back to 0.</span></label>
       <label class="check"><input type="checkbox" id="dry" ${lsGet("practice") === "0" ? "" : "checked"}>
-        <span><b>Practice mode</b> — learn and show what it would do, but don't move, delete or mark anything.</span></label>
+        <span><b>Practice mode</b> — show what it would do, but don't move, delete or mark anything.</span></label>
       <div class="row" style="gap:10px;flex-wrap:wrap;margin-top:6px">
         <button class="btn primary" id="startGmail">Start reading</button>
         <button class="btn" id="startAuto" title="Go through the whole inbox without asking anything">⚡ Auto mode — whole inbox</button>
       </div>
-      <p class="hint" style="margin-top:8px"><b>Auto mode</b> goes through the whole inbox (ignores the days and max limits) and asks nothing.
-        Your rules handle what they can; emails that need you are skipped and stay unread for your next session.
-        “Read it first” rules save a note and archive instead. Uses the two checkboxes above.</p>
+      <p class="hint" style="margin-top:8px"><b>Auto mode</b> ignores the limits above and asks nothing: your rules handle what they can, the rest stays unread.</p>
       <div class="err" id="startErr"></div></div>`;
 }
 function readerCard() {
