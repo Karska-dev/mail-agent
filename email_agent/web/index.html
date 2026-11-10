@@ -372,6 +372,24 @@ input[type=checkbox], input[type=radio] { accent-color: var(--ink); }
 .swatch i { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--ink); display: block; }
 .swatch small { color: var(--muted); font-size: 10px; letter-spacing: .06em; }
 .preview { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+/* typography: regular weights and the design's sizes (bold is kept for a few key values only) */
+.subject { font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; font-size: 22px; font-weight: 400;
+  letter-spacing: .03em; line-height: 1.25; margin: 10px 0 4px; }
+.meta { flex-wrap: wrap; row-gap: 3px; font-size: 13px; }
+.meta > span:not(.cat):not(.tag) { white-space: nowrap; }
+.from { font-size: 13px; }
+.summary { font-size: 14px; }
+.facts dt { color: var(--muted); }
+.facts code { background: transparent; border: 1.5px solid var(--ink); border-radius: 0; font-weight: 400; padding: 0 6px; }
+.cat, .tag.imp, .tag.new { font-weight: 400; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; padding: 1px 8px; }
+.tag.imp, .tag.new { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.imp-reason { font-weight: 400; }
+.ask .prompt { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.item .t, .acc-name, .btn.primary, .tab.on, .chipbtn.on, .reading-head { font-weight: 400; }
+.when-chip, .when-chip.overdue, .when-chip.soon { font-size: 12px; font-weight: 400; padding: 1px 9px; white-space: nowrap; }
+.when { gap: 8px; margin: 4px 0; }
+.item .acts { flex-wrap: wrap; row-gap: 4px; }
+.item .acts a, .item .acts button { white-space: nowrap; }
 /* compact: the start screen should fit a laptop window without scrolling */
 body { font-size: 13px; }
 header { padding: 14px 32px 0; }
@@ -1090,15 +1108,15 @@ function sentLabel(x) {
 // a to-do's date on its own line, coloured by how close it is
 function whenLine(x) {
   const w = x.when; if (!w) return "";
-  if (!w.date) return `<div class="when"><span class="when-chip">📅 ${esc(w.text)}</span></div>`;
+  if (!w.date) return `<div class="when"><span class="when-chip">${esc(w.text)}</span></div>`;
   const d = new Date(w.date + "T12:00:00"), n = w.days;
   const day = d.toLocaleDateString(undefined, {weekday: "short", month: "short", day: "numeric",
                                                ...(d.getFullYear() !== new Date().getFullYear() ? {year: "numeric"} : {})});
   const rel = n === 0 ? "today" : n === 1 ? "tomorrow" : n === -1 ? "yesterday"
             : n > 0 ? `in ${n} days` : `${-n} days ago`;
   const cls = x.done ? "" : n < 0 ? "overdue" : n <= 1 ? "soon" : n <= 7 ? "week" : "later";
-  return `<div class="when"><span class="when-chip ${cls}">📅 ${esc(day)}${w.time ? " · " + esc(w.time) : ""} · ${rel}${cls === "overdue" ? " — overdue" : ""}</span>
-    ${w.text ? `<span class="when-text">${esc(w.text)}</span>` : ""}</div>`;
+  return `<div class="when"><span class="when-chip ${cls}">${cls === "overdue" ? "overdue" : rel}</span>
+    <span class="when-text">${esc(day)}${w.time ? " · " + esc(w.time) : ""}${cls === "overdue" ? " · " + rel : ""}${w.text ? " · " + esc(w.text) : ""}</span></div>`;
 }
 // ------------------------------------------------------------ clean-up of old notes & to-dos
 let cleanupOpen = false, cuDays = 30, cuKeep = true, cuInfo = null, cuBusy = false;
