@@ -427,19 +427,48 @@ input[type=text], input[type=password], input[type=email], input[type=number], t
 .step-nav { margin-top: 10px; }
 .side { gap: 12px; top: 12px; max-height: calc(100vh - 24px); }
 .pane { padding: 4px 12px 10px; }
+/* fixed frame: header and sub bar never move or change height; the email column and the sidebar scroll inside themselves */
+html, body { height: 100%; }
+header { height: 56px; padding: 10px 32px 0; align-items: center; gap: 12px; }
+header h1 { font-size: clamp(24px, 4.4vh, 38px); }
+.h-right { flex-wrap: nowrap; }
+.h-right .pill { max-width: 280px; overflow: hidden; text-overflow: ellipsis; }
+.subbar { height: 38px; display: flex; align-items: center; justify-content: center; padding: 0 32px; }
+.steps-nav { margin: 0; }
+.who-line { color: var(--muted); font-size: 12px; letter-spacing: .06em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+body.idle #who { display: none; } body:not(.idle) #steps { display: none; }
+@media (min-width: 901px) {
+  body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  header, .subbar { flex: none; }
+  .layout { flex: 1 1 auto; min-height: 0; width: 100%; padding: 4px 32px 16px; align-items: stretch; }
+  #main { min-height: 0; overflow-y: auto; padding-right: 4px; }
+  .side { position: static; height: 100%; max-height: none; min-height: 0; }
+}
+@media (max-width: 900px) { header { height: auto; min-height: 56px; padding: 10px 16px 0; } .subbar { padding: 0 16px; } }
+.subject { font-size: 17px; margin: 8px 0 3px; }
+.mail-head { padding: 12px 16px 8px; } .lines { padding: 8px 16px; } .ask { padding: 10px 16px 12px; }
+.chips { margin-top: 8px; gap: 6px; } .chip { padding: 3px 10px; font-size: 12px; }
+.mail { margin-bottom: 10px; }
+.mail.compact { margin-bottom: 6px; border-radius: 10px; }
+.sumline { display: flex; align-items: center; gap: 10px; width: 100%; background: none; border: 0; padding: 7px 14px; text-align: left; font-size: 13px; }
+.sumline:hover { background: var(--panel-2); border-radius: 10px; }
+.sum-n { color: var(--muted); white-space: nowrap; } .sum-subj { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sum-out { flex: 0 1 38%; min-width: 0; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab { white-space: nowrap; padding: 2px 9px; font-size: 12px; }
+.mail.compact .cat { background: transparent; color: var(--ink); }
 </style>
 </head>
 <body>
 <header>
   <div class="h-left"><button id="quitBtn" class="btn" title="Quit Mail Agent (anything not handled stays in your inbox)">Quit</button></div>
-  <div class="h-mid"><h1>Mail Agent</h1><div id="who" class="hint"></div></div>
+  <div class="h-mid"><h1>Mail Agent</h1></div>
   <div class="h-right">
     <button id="stopBtn" class="btn danger" style="display:none">Stop for now</button>
     <button id="newBtn" class="btn" style="display:none">New session</button>
     <span id="status" class="pill">idle</span>
   </div>
 </header>
-<nav id="steps" class="steps-nav"></nav>
+<div class="subbar"><nav id="steps" class="steps-nav"></nav><div id="who" class="who-line"></div></div>
 
 <div class="layout">
   <main id="main"></main>
@@ -530,15 +559,18 @@ function render() {
   const L = S.live || {};
   const tallies = [L.auto ? `${L.auto} auto` : "", L.asked ? `${L.asked} by you` : "", L.one_off ? `${L.one_off} read & archived` : "",
                    L.skipped ? `${L.skipped} skipped` : ""].filter(Boolean).join(" · ");
-  const prog = live0 && lastMail ? ` · email ${lastMail.n} of ${lastMail.total}${tallies ? ` <span class="tally">(${tallies})</span>` : ""}` : "";
+  const prog = live0 && lastMail ? ` · ${lastMail.n} of ${lastMail.total}` : "";
   st.innerHTML = S.status === "idle" ? "ready"
     : S.status === "error" ? "error"
-    : S.status === "finished" ? "✓ session finished"
-    : waiting ? `● waiting for your answer${prog}`
+    : S.status === "finished" ? "✓ finished"
+    : waiting ? `● waiting for you${prog}`
     : `<span class="spin sm"></span> working${prog}`;
   st.className = "pill " + (S.status === "error" ? "error" : S.status === "finished" ? "done"
     : waiting ? "wait" : live0 ? "running" : "");
-  $("#who").textContent = S.status === "idle" ? "" : S.mode === "demo" ? "Demo inbox" + (S.auto ? " · auto mode" : "") : (S.current_account || "") + (S.dry_run ? " · practice mode" : "") + (S.auto ? " · auto mode" : "");
+  document.body.classList.toggle("idle", S.status === "idle");
+  const whoBase = S.status === "idle" ? "" : S.mode === "demo" ? "Demo inbox" + (S.auto ? " · auto mode" : "") : (S.current_account || "") + (S.dry_run ? " · practice mode" : "") + (S.auto ? " · auto mode" : "");
+  const whoText = [whoBase, tallies].filter(Boolean).join(" · ");
+  $("#who").textContent = whoText; $("#who").title = whoText;
   const live = S.status === "running" || S.status === "connecting";
   $("#stopBtn").style.display = live ? "" : "none";
   $("#newBtn").style.display = (S.status === "finished" || S.status === "error") ? "" : "none";
@@ -552,7 +584,8 @@ function render() {
   if (S.status === "error") html += `<div class="card"><h2>Something went wrong</h2><p class="err">${esc(S.error)}</p>
       <button class="btn primary" onclick="newSession()">Back</button></div>`;
   for (const b of banner) html += `<div class="banner">${esc(b)}</div>`;
-  cards.forEach((c, i) => html += c.banner ? `<div class="banner">${esc(c.banner)}</div>` : c.account
+  const firstMail = cards.findIndex(c => c.lines);
+  cards.forEach((c, i) => html += c.banner ? (firstMail >= 0 && i < firstMail ? "" : `<div class="banner">${esc(c.banner)}</div>`) : c.account
     ? `<div class="acc-divider">📬 ${esc(c.account)}</div>`
     : mailCard(c, i === cards.length - 1 && S.status === "running"));
   const busyNow = (S.status === "running" || S.status === "connecting") && !S.question;
@@ -563,21 +596,38 @@ function render() {
   main.innerHTML = html;
   wireAsk();
   const active = $(".mail.active");
-  if (active && (lastRenderedCard !== cards.length || S.question)) {
-    const r = active.getBoundingClientRect();
-    if (lastRenderedCard !== cards.length || r.bottom > innerHeight) active.scrollIntoView({block: "end", behavior: "smooth"});
-  }
+  const qid = S.question ? S.question.id : null;
+  if (active && (lastRenderedCard !== cards.length || qid !== lastQid)) keepInView(active);
+  lastQid = qid;
   lastRenderedCard = cards.length;
-  if (S.status === "finished" && lastRenderedStatus !== "finished") {
-    const d = $(".done-card"); if (d) d.scrollIntoView({block: "center", behavior: "smooth"});
-  }
+  if (S.status === "finished" && lastRenderedStatus !== "finished") keepInView($(".done-card"), true);
   lastRenderedStatus = S.status;
 }
-let lastRenderedStatus = null;
+let lastRenderedStatus = null, lastQid = null;
+// Scroll the email column (not the whole page) just enough to show the card; no animation.
+function keepInView(el, top) {
+  const m = $("#main"); if (!el || !m) return;
+  if (m.scrollHeight <= m.clientHeight + 1) { el.scrollIntoView({block: top ? "start" : "nearest"}); return; }   // narrow layout: the page scrolls
+  const mr = m.getBoundingClientRect(), r = el.getBoundingClientRect();
+  if (top || (r.height > mr.height && !S.question)) m.scrollTop += r.top - mr.top - 4;
+  else if (r.bottom > mr.bottom) m.scrollTop += r.bottom - mr.bottom + 6;
+  else if (r.top < mr.top) m.scrollTop -= mr.top - r.top + 6;
+}
 let lastRenderedCard = 0;
 
+let expanded = new Set();
+function toggleMail(n) { expanded.has(n) ? expanded.delete(n) : expanded.add(n); render(); }
 function mailCard(c, isActive) {
   const a = c.analysis || {};
+  if (!isActive && !expanded.has(c.n)) {            // finished emails fold into one line; click to open
+    const last = [...c.lines].reverse().find(l => l.type === "done" || l.type === "notice");
+    const failed = c.lines.some(l => l.type === "notice" && /^Couldn't/.test(l.text));
+    return `<article class="mail past compact"><button class="sumline" onclick="toggleMail(${c.n})" title="Show this email">
+      ${a.category ? `<span class="cat ${a.category === "security" ? "cat-sec" : ""}">${esc(a.category)}</span>` : ""}
+      ${failed ? `<span class="tag imp">move failed</span>` : ""}
+      <span class="sum-n">${c.n}/${c.total}</span><span class="sum-subj">${esc(c.subject)}</span>
+      <span class="sum-out">${last ? esc(last.text) : ""}</span></button></article>`;
+  }
   const facts = Object.entries(a.facts || {}).map(([k, v]) =>
     `<dt>${esc(k)}</dt><dd>${[].concat(v).map(x => k === "coupon code" ? `<code>${esc(x)}</code>` : esc(x)).join(k === "coupon code" ? " " : "<br>")}</dd>`).join("");
   const lines = c.lines.map(l => {
@@ -595,7 +645,8 @@ function mailCard(c, isActive) {
       <div class="meta">${a.category ? `<span class="cat ${a.category === "security" ? "cat-sec" : ""}">${a.category === "security" ? "🔒 " : ""}${esc(a.category)}</span>` : ""}
         ${a.importance === "high" ? `<span class="tag imp" title="${esc(a.importance_reason || "")}">★ Important</span>` : ""}
         ${c.fresh ? `<span class="tag new">📨 just arrived</span>` : ""}<span>${c.n} of ${c.total}</span>${c.ref ? `<span>· #${c.ref}</span>` : ""}${a.engine && a.engine !== "offline" ? `<span>· read by ${esc(a.engine)}${a.seconds >= 1 ? ` in ${Math.round(a.seconds)}s` : ""}</span>` : ""}
-        ${c.ref ? `<button class="link" onclick="openOriginal(${c.ref})">view original</button>` : ""}</div>
+        ${c.ref ? `<button class="link" onclick="openOriginal(${c.ref})">view original</button>` : ""}
+        ${!isActive ? `<button class="link" onclick="toggleMail(${c.n})">fold</button>` : ""}</div>
       <div class="subject">${esc(c.subject)}</div>
       <div class="from">${esc(c.sender)}${c.date ? " · " + esc(c.date) : ""}</div>
       ${a.summary ? `<div class="summary">${esc(a.summary)}</div>` : ""}
@@ -608,8 +659,9 @@ function mailCard(c, isActive) {
   </article>`;
 }
 
-const SUGGESTIONS = ["Save the key info to my notes and archive it", "Add it to my to-do list and archive it",
-  "Archive it", "Delete it", "Unsubscribe and delete it", "Leave it in my inbox"];
+const SUGGESTIONS = [["Save key info to notes and archive", "Save the key info to my notes and archive it"],
+  ["Add to to-dos and archive", "Add it to my to-do list and archive it"], ["Archive", "Archive it"], ["Delete", "Delete it"],
+  ["Unsubscribe and delete", "Unsubscribe and delete it"], ["Leave in inbox", "Leave it in my inbox"]];
 
 function askBox(q, c) {
   if (q.kind === "choice") {
@@ -624,10 +676,9 @@ function askBox(q, c) {
   return `<div class="ask"><div class="prompt">${esc(prompt)}</div>
     <div class="answer-row"><textarea id="answer" rows="1" placeholder="Tell me in your own words — e.g. “save the coupon code to my notes and delete it”">${esc(draft)}</textarea>
     <button class="btn primary" id="send">Send</button></div>
-    <div class="chips-label">Quick answers</div>
-    <div class="chips">${SUGGESTIONS.map(s => `<button class="chip" data-fill="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+    <div class="chips">${SUGGESTIONS.map(([label, full]) => `<button class="chip" data-fill="${esc(full)}">${esc(label)}</button>`).join("")}</div>
     ${main ? `<div class="chips">
-      <button class="chip util" data-send="r">📖 Just read it &amp; archive — no rule</button>
+      <button class="chip util" data-send="r">📖 Read &amp; archive, no rule</button>
       <button class="chip util" data-view="${c.ref}">👁 View original</button>
       <button class="chip util" data-send="skip">⏭ Skip for now</button>
     </div>` : ""}</div>`;
@@ -706,20 +757,21 @@ function infoPanel() {
   if (S.status !== "idle") return "";
   const cur = curStep(), accs = S.accounts || [];
   const readerName = (S.reader === "local" ? "Local AI · " + (S.local_model || "") : S.reader === "claude" ? "Claude" : "Built-in reader");
+  const demo = `<h3 class="panel-h mt">New here?</h3>
+      <p class="hint" style="margin:0 0 10px">12 sample emails. Nothing real is touched; starts fresh each time.</p>
+      <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn" id="startDemo" style="border-style:dashed">Try the demo</button>
+        <button class="btn quiet" id="startDemoAuto" title="Reuses the rules from your last demo">Demo in auto mode</button></div>`;
   if (cur === 3 && accs.length) return `<div class="card"><h3 class="panel-h">Your setup</h3>
       <div class="kvrow"><span>Reader</span><b>${esc(readerName)}</b></div>
       <div class="kvrow"><span>Mailboxes</span><b>${accs.length}</b></div>
-      <div class="kvrow"><span>Rules learned</span><b>${(panels.rules || []).length}</b></div>
-      <h3 class="panel-h mt">New here?</h3>
-      <p class="hint" style="margin:0 0 10px">12 sample emails. Nothing real is touched; starts fresh each time.</p>
-      <div class="row" style="gap:10px;flex-wrap:wrap"><button class="btn" id="startDemo" style="border-style:dashed">Try the demo</button>
-        <button class="btn quiet" id="startDemoAuto" title="Reuses the rules from your last demo">Demo in auto mode</button></div></div>`;
-  return `<div class="card"><h3 class="panel-h">How it works</h3>
+      <div class="kvrow"><span>Rules learned</span><b>${(panels.rules || []).length}</b></div>${demo}</div>`;
+  const how = `<h3 class="panel-h">How it works</h3>
       <ul class="how"><li><b>1</b><span>It reads a new email and asks what to do, in plain words.</span></li>
         <li><b>2</b><span>Your answer becomes a rule for that sender.</span></li>
         <li><b>3</b><span>Next time it handles similar mail on its own. Rules are shared across all your mailboxes.</span></li></ul>
       <h3 class="panel-h mt">Safe to try</h3>
-      <p class="hint" style="margin:0">Practice mode changes nothing. Every handled email is kept so you can put it back.</p></div>`;
+      <p class="hint" style="margin:0">Practice mode changes nothing. Every handled email is kept so you can put it back.</p>`;
+  return `<div class="card">${how}${cur === 3 ? demo : ""}</div>`;
 }
 function paintInfo() {
   const st = $("#steps"), box = $("#info");
@@ -927,7 +979,7 @@ function wireStart() {
 }
 async function refreshState() { const st = await api("/api/state?since=0"); S = {...st}; events = st.events || []; build(); render(); loadPanels(); }
 async function start(params) {
-  try { events = []; cards = []; banner = []; draft = ""; lastRenderedCard = 0;
+  try { events = []; cards = []; banner = []; draft = ""; lastRenderedCard = 0; expanded.clear();
         await api("/api/start", params); S.status = "connecting"; render(); loadPanels(); }
   catch (e) { const el = $("#startErr"); if (el) el.textContent = e.message; else toast(e.message); }
 }
@@ -1034,10 +1086,11 @@ async function noteToTodo(id, btn) {
   catch (e) { toast(e.message); }
   await loadPanels();
 }
+const fmtN = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : n;
 function renderPanels() {
   const count = k => k === "todos" ? (panels.todos || []).filter(t => !t.done).length : (panels[k] || []).length;
   $("#tabs").innerHTML = TABS.map(([k, l]) =>
-    `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${l}${k === "insights" || k === "look" ? "" : `<span class="n">${count(k)}</span>`}</button>`).join("");
+    `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${l}${k === "insights" || k === "look" ? "" : `<span class="n">${fmtN(count(k))}</span>`}</button>`).join("");
   document.querySelectorAll(".tab").forEach(b => b.onclick = () => { tab = b.dataset.t; editingNote = null; renderPanels(); });
   if (tab === "insights") { $("#pane").innerHTML = insightsHtml(); if (!insightsData) loadInsights(); return; }
   if (tab === "look") { $("#pane").innerHTML = lookHtml(); wireLook(); return; }

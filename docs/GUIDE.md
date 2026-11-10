@@ -153,7 +153,7 @@ Items created before this, or by the built-in reader, have a **✨ rewrite** lin
 
 **Order:** to-dos and notes are listed **newest email first**, by the date of the email they came from. Each one shows "· email from Sep 28" so you can see the order. Finished to-dos stay at the bottom.
 
-**Dates stand out:** a to-do with a date shows it on its own coloured line under the title, for example "📅 Thu, Oct 1 · 5pm · tomorrow". Red means overdue, orange today or tomorrow, amber this week and blue later. The date comes from the due date, or from a date in the title or summary. Due dates written as words ("Immediate") are shown as written.
+**Dates stand out:** a to-do with a date shows a small chip under the title saying how far away it is, for example "tomorrow" or "in 5 days", with the full date next to it ("Thu, Oct 1 · 5pm"). The chip turns lime when the to-do is overdue or due today or tomorrow. The date comes from the due date, or from a date in the title or summary. Due dates written as words ("Immediate") are shown as written.
 
 **Clean up old notes & to-dos:** the To-dos and Notes tabs have a **🧹 Clean up old notes & to-dos** link at the top. It removes the ones about emails older than N days (30 by default). Age is the **email's** date, not when the note was made, which matters after a big inbox clean-up. It shows how many will go before you confirm. To-dos with a due date still ahead are kept unless you untick that option. Removed items are saved to `cleared/` in the data folder, and **undo it** brings the last clean-up back.
 
