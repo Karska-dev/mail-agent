@@ -41,15 +41,15 @@ Click **Start demo** to try it with 12 sample emails, or add your Gmail with an 
 <table>
 <tr>
 <td width="62%" valign="top"><img src="docs/images/scam-warning.png" alt="An email card with a red phishing warning listing five warning signs"></td>
-<td valign="top"><img src="docs/images/todos.png" alt="The to-do list with coloured date chips: tomorrow, in 5 days, in 16 days, overdue"></td>
+<td valign="top"><img src="docs/images/todos.png" alt="The to-do list: each to-do has a date chip (in 6 days, in 8 days, in 14 days) and the full date beside it"></td>
 </tr>
 <tr>
 <td valign="top"><b>Scam warnings</b> list the concrete signs: a lookalike sender, pressure wording, requests for passwords, hidden links.</td>
-<td valign="top"><b>To-dos</b> with plain titles, the key link, and dates coloured by how close they are.</td>
+<td valign="top"><b>To-dos</b> with plain titles, the key link, and a date chip that turns lime when something is overdue or due tomorrow.</td>
 </tr>
 </table>
 
-<img src="docs/images/auto-mode.png" alt="Auto mode working through the inbox with live counts (email 7 of 12, 4 handled automatically, 2 skipped) while the to-do list fills up">
+<img src="docs/images/auto-mode.png" alt="Auto mode working through the inbox with live counts (email 6 of 12, 3 handled automatically, 2 skipped) while the to-do list fills up">
 
 **Auto mode** works through a whole inbox without asking anything: rules handle what they can, the to-do list fills up as it goes, and anything that needs you stays unread for your next session.
 
