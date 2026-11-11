@@ -85,6 +85,30 @@ def outcome_of(source: str, failed: bool = False) -> str:
     return "asked"
 
 
+def retry_failed_move(mailbox, originals, entry: dict[str, Any], processed_path: Path) -> str:
+    """Redo a move the mail server refused earlier ("Try again now"). Returns a sentence for the person.
+    Raises if the server refuses again; then nothing changes and the email stays as it was."""
+    wanted = entry.get("wanted")
+    if not str(entry.get("handled_by") or "").endswith("— failed") or wanted not in ("archive", "delete", "keep"):
+        raise ValueError("This email has no failed move to retry.")
+    uid = mailbox.find_in_inbox(entry["email_id"])
+    if uid:
+        stub = Email(id=entry["email_id"], sender=entry["from"], subject=entry["subject"], body="", uid=uid)
+        message = getattr(mailbox, wanted)(stub)
+        location = {"archive": "archive", "delete": "trash", "keep": "inbox"}[wanted]
+    else:
+        message, location = "it's no longer in your inbox, so there is nothing left to move", None
+    update: dict[str, Any] = {"handled_by": entry["handled_by"].removesuffix(" — failed"), "verified": True,
+                              "wanted": None}
+    if location:
+        update["location"] = location
+    originals.update(entry["ref"], **update)
+    done = set(json.loads(processed_path.read_text())) if processed_path.exists() else set()
+    done.add(entry["email_id"])
+    processed_path.write_text(json.dumps(sorted(done)))
+    return message
+
+
 class EmailAgent:
     def __init__(self, data_dir: Path, mailbox: Mailbox, analyzer, parser, ui, min_confidence: float = 0.6,
                  interactive: bool = True, account: str | None = None):
@@ -647,6 +671,8 @@ class EmailAgent:
                          "outcome": outcome_of(source, failed), "rule_id": rule_id_of(source),
                          "seconds": getattr(analysis, "seconds", 0) or 0})
         update: dict[str, Any] = {"handled_by": source + (" — failed" if failed else "")}
+        if failed:   # remember what we were trying to do, so "Try again now" can redo exactly that
+            update["wanted"] = next((a for a in reversed(actions) if a in TERMINAL_ACTIONS), None)
         if location:
             update["location"] = location
         if verified and not self.practice:
