@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from .agent import EmailAgent, outcome_of, rule_id_of
+from .agent import EmailAgent, outcome_of, retry_failed_move, rule_id_of
 from .demo import DEMO_EMAILS
 from . import cleanup, keychain, local_ai, render
 from .llm import DEFAULT_MODEL, check_key, claude_available, make_engines
@@ -685,6 +685,26 @@ class App:
                     handled_by=handled_by, rule_id=rule_id_of(handled_by), outcome=outcome_of(handled_by))
         return result
 
+    def retry_move(self, ref: int) -> str:
+        """"Try again now" on an email whose move the server refused."""
+        if self.mode == "demo":
+            raise ValueError("Practice mode never fails a move, so there is nothing to retry.")
+        if self.status in ("connecting", "running"):
+            raise ValueError("Finish or stop the current session first, then try again.")
+        originals = self._stores()[4]
+        entry = originals.entry(ref)
+        if not entry:
+            raise ValueError(f"No email #{ref}.")
+        user = entry.get("account") or (self.accounts.items[0]["user"] if len(self.accounts.items) == 1 else None)
+        acc = self.accounts.find(user) if user else None
+        if not acc:
+            raise ValueError("I don't know which mailbox this email came from.")
+        mb = IMAPMailbox(acc["host"], acc["user"], self._password(acc["user"]))
+        try:
+            return retry_failed_move(mb, originals, entry, self.data_dir / "processed.json")
+        finally:
+            mb.close()
+
     def set_mode(self, mode: str) -> None:
         if self.status not in ("connecting", "running") and mode in ("demo", "gmail"):
             self.mode = mode
@@ -816,6 +836,8 @@ def make_handler(app: App):
                     app.delete_note(int(parts[2]))
                 elif parts[:2] == ["api", "rule"] and len(parts) == 4 and parts[3] == "delete":
                     app.delete_rule(parts[2])
+                elif parts[:2] == ["api", "retry"] and len(parts) == 3:
+                    return self._json({"ok": True, "result": app.retry_move(int(parts[2]))})
                 elif parts[:2] == ["api", "restore"] and len(parts) == 3:
                     return self._json({"ok": True, "result": app.restore(int(parts[2]))})
                 else:

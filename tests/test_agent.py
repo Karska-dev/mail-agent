@@ -1,4 +1,5 @@
 """End-to-end behaviour tests (offline engine, local mailbox)."""
+import json
 from pathlib import Path
 
 import pytest
@@ -792,3 +793,41 @@ def test_mac_launcher_opens_the_app(tmp_path, monkeypatch):
     launcher = importlib.util.module_from_spec(spec); spec.loader.exec_module(launcher)
     launcher.main()
     assert seen == [["app", "--quit-when-idle", "30", "--no-browser"]]
+
+
+# --------------------------------------------------------------------------- #
+# "Try again now" for a move the server refused
+# --------------------------------------------------------------------------- #
+class FlakyMailbox(LocalMailbox):
+    """Refuses to archive until told otherwise; knows how to find mail in the inbox like the IMAP one does."""
+    refuse = True
+
+    def find_in_inbox(self, message_id):
+        return "1" if any(d["id"] == message_id for d in self._load("inbox")) else None
+
+    def archive(self, msg):
+        if self.refuse:
+            raise RuntimeError("server said no")
+        return super().archive(msg)
+
+
+def test_failed_move_can_be_retried(tmp_path):
+    from email_agent.agent import retry_failed_move
+    mb = FlakyMailbox(tmp_path / "mailbox")
+    mb.load_inbox([E["d12"]])
+    agent = EmailAgent(tmp_path, mb, HeuristicAnalyzer(), HeuristicInstructionParser(), ScriptedUI({"d12": ["v", "r"]}))
+    agent.run(days=None)
+    ref = agent.originals.ref_for("d12")
+    entry = agent.originals.entry(ref)
+    assert entry["handled_by"].endswith("— failed") and entry["wanted"] == "archive"
+    assert mb.counts()["inbox"] == 1 and "d12" not in agent.processed
+    with pytest.raises(RuntimeError):                      # still refused: nothing changes
+        retry_failed_move(mb, agent.originals, entry, tmp_path / "processed.json")
+    assert agent.originals.entry(ref)["handled_by"].endswith("— failed")
+    mb.refuse = False
+    assert retry_failed_move(mb, agent.originals, entry, tmp_path / "processed.json") == "archived"
+    after = agent.originals.entry(ref)
+    assert after["location"] == "archive" and after["verified"] and not after["handled_by"].endswith("failed")
+    assert "d12" in json.loads((tmp_path / "processed.json").read_text())
+    with pytest.raises(ValueError):                        # nothing left to retry
+        retry_failed_move(mb, agent.originals, after, tmp_path / "processed.json")

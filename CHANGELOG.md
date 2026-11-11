@@ -4,21 +4,20 @@ All notable changes to this project are listed here. The format follows [Keep a 
 
 ## [Unreleased]
 
-### Changed
-- The design fonts (Orbitron for titles, Share Tech Mono for text) are now built into the page, so the look matches the design and nothing is loaded from the internet. Licences are in `licenses/`.
-- New desktop layout: big centred title, a 3-step start (1 Mailbox, 2 Reader, 3 Start), a "How it works" / "Your setup" panel beside it, and each reader shown with privacy, speed and accuracy bars. The sidebar tabs are unchanged.
-- New app and browser-tab icon: lime envelope with two white sparkles (a big and a small one, like the old icon) on a black tile (source: `packaging/mac/icon.svg`).
-
-## [1.1.0] — 2026-11-09
+## [1.1.0] — 2026-11-10
 
 ### Added
 - **Insights** tab: how much the agent handles on its own, questions per 100 emails (and how that changed), emails you put back after an automatic action, the most-used rules, senders you keep being asked about, what was cleared out, median read time and an estimate of time saved. Practice and demo mail are not counted. Also available at `/api/insights`.
 - **Look** tab: Light, Dark or Match my Mac, and an accent colour (lime by default; orange, blue or pink). Saved in the browser.
 - The session summary lists the emails skipped in auto mode, and says which sender you were asked about most.
-- A move the mail server does not confirm is flagged clearly in the email's card; the email stays in your inbox.
+- A move the mail server does not confirm is flagged clearly in the email's card; the email stays in your inbox. The card now has a **Try again now** button (available once the session is stopped or finished) that redoes exactly that move.
+- Phone and tablet layouts: the header stacks, buttons stay within the screen and the answer box is tall enough to read its hint.
 
 ### Changed
-- New look: grey, dashed panels, round buttons and one small bright accent. System fonts only; nothing is loaded from the internet.
+- New design: grey, dashed panels, round buttons and one small bright accent, with the design fonts (Orbitron for titles, Share Tech Mono for text) built into the page, so nothing is loaded from the internet. Licences are in `licenses/`.
+- New desktop layout: big centred title, a 3-step start (1 Mailbox, 2 Reader, 3 Start), a "How it works" / "Your setup" panel beside it, and each reader shown with privacy, speed and accuracy bars.
+- The page now fits the window: the header stays in place and only the email column and the sidebar scroll. Finished emails fold to one line, dates show "overdue" or a relative time, and the quick answers are shorter.
+- New app and browser-tab icon: lime envelope with two white sparkles on a black tile (source: `packaging/mac/icon.svg`).
 - The activity log now also records the outcome (auto, asked, one-off, failed), the rule used and the reading time of each email.
 - Putting an email back and deleting a rule are recorded in `events.json` in the data folder, so Insights can count them.
 
